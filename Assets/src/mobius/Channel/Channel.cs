@@ -2,6 +2,7 @@
 using System.Collections;
 using Tautalos.Unity.Mobius.Broadcaster;
 using System.Collections.Generic;
+using Tautalos.Unity.Mobius.Signal;
 
 namespace Tautalos.Unity.Mobius.Channel
 {
@@ -76,7 +77,6 @@ namespace Tautalos.Unity.Mobius.Channel
 		{
 			throw new System.NotImplementedException ();
 		}
-		
 
 	}
 }

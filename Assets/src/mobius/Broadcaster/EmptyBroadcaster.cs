@@ -1,19 +1,8 @@
 
+using Tautalos.Unity.Mobius.Channel;
+
 namespace Tautalos.Unity.Mobius.Broadcaster
 {
-	public interface IBroadcaster
-	{
-		string Name { get; }
-		
-		IEventType[] GetEventTypes ();
-		
-		bool HasEventType ();
-		
-		void Silence ();
-		
-		bool IsEmpty ();
-	}
-	
 	public class EmptyBroadcaster: IBroadcaster
 	{
 		public string Name {
@@ -32,7 +21,7 @@ namespace Tautalos.Unity.Mobius.Broadcaster
 		
 		public void Silence ()
 		{
-		
+			
 		}
 		
 		public bool IsEmpty ()
