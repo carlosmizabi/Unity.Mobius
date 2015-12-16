@@ -1,7 +1,7 @@
 
-using Tautalos.Unity.Mobius.Signal;
+using Tautalos.Unity.Mobius.Signals;
 
-namespace Tautalos.Unity.Mobius.Channel
+namespace Tautalos.Unity.Mobius.Channels
 {
 	public interface ISignaller
 	{

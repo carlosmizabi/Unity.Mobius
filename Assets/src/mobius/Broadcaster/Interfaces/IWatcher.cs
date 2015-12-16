@@ -1,6 +1,6 @@
-using Tautalos.Unity.Mobius.Channel;
+using Tautalos.Unity.Mobius.Channels;
 
-namespace Tautalos.Unity.Mobius.Broadcaster
+namespace Tautalos.Unity.Mobius.Broadcasters
 {
 	public interface IWatcher
 	{

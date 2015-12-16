@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
-using Tautalos.Unity.Mobius.Broadcaster;
+using Tautalos.Unity.Mobius.Broadcasters;
 using System.Collections.Generic;
-using Tautalos.Unity.Mobius.Signal;
+using Tautalos.Unity.Mobius.Signals;
 
-namespace Tautalos.Unity.Mobius.Channel
+namespace Tautalos.Unity.Mobius.Channels
 {
 	public class Channel: IChannel
 	{

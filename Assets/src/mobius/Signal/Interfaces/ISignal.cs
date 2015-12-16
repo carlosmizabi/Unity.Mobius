@@ -1,6 +1,6 @@
-using Tautalos.Unity.Mobius.Channel;
+using Tautalos.Unity.Mobius.Channels;
 
-namespace Tautalos.Unity.Mobius.Signal
+namespace Tautalos.Unity.Mobius.Signals
 {
 	public interface ISignal
 	{

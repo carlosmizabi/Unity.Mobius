@@ -1,4 +1,4 @@
-namespace Tautalos.Unity.Mobius.Signal
+namespace Tautalos.Unity.Mobius.Signals
 {
 	public interface IMessage
 	{

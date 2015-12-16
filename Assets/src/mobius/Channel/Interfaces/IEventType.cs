@@ -1,4 +1,4 @@
-namespace Tautalos.Unity.Mobius.Channel
+namespace Tautalos.Unity.Mobius.Channels
 {
 	public interface IEventType
 	{

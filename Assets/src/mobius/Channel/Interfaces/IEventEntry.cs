@@ -1,6 +1,6 @@
-using Tautalos.Unity.Mobius.Broadcaster;
+using Tautalos.Unity.Mobius.Broadcasters;
 
-namespace Tautalos.Unity.Mobius.Channel
+namespace Tautalos.Unity.Mobius.Channels
 {
 	public interface IEventEntry
 	{
