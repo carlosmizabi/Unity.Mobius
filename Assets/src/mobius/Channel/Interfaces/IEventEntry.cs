@@ -6,6 +6,8 @@ namespace Tautalos.Unity.Mobius.Channels
 	{
 		IEventType EventType { get; }
 		IBroadcaster Broadcaster { get; }
+		
+		bool IsEmpty ();
 	}
 }
 

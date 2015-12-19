@@ -83,6 +83,11 @@ namespace Tautalos.Unity.Mobius.Channels
 		{
 			throw new System.NotImplementedException ();
 		}
+		
+		public bool IsEmpty ()
+		{
+			return true;
+		}
 
 	}
 }

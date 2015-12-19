@@ -16,6 +16,8 @@ namespace Tautalos.Unity.Mobius.Channels
 		
 		void emit (ISignal[] signals);
 		
+		bool IsEmpty ();
+		
 	}
 }
 

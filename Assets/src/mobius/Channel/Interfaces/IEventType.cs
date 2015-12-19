@@ -5,6 +5,8 @@ namespace Tautalos.Unity.Mobius.Channels
 		string Name { get; }
 		string Description  { get; }
 		string[] Tags { get; }
+		
+		bool IsEmpty ();
 	}
 }
 

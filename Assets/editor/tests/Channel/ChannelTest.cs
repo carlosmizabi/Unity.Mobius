@@ -40,7 +40,7 @@ namespace Tautalos.Unity.Mobius.Tests
 		
 		public void ShouldAddEvenTypeToRegistry ()
 		{
-			var entry = new EventEntryMock ();
+			var entry = new EmptyEventEntry ();
 			channel.AddEventEntry (entry);
 			var registry = channel.GetRegistry ();
 			Assert.IsNotEmpty (registry);

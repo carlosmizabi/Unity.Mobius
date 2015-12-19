@@ -3,14 +3,13 @@ using Tautalos.Unity.Mobius.Channels;
 
 namespace Tautalos.Unity.Mobius.Broadcasters
 {
-	public class EmptyBroadcaster: IBroadcaster
+	public class Broadcaster: IBroadcaster
 	{
-		string _name = "EMPTY";
+		string _name;
 		
-		static EmptyBroadcaster _instance = new EmptyBroadcaster ();
-		
-		public static EmptyBroadcaster Instance {
-			get { return _instance; }
+		public Broadcaster (string name = "ANONYMOUS")
+		{
+			_name = name;
 		}
 		
 		public string Name {
@@ -34,7 +33,7 @@ namespace Tautalos.Unity.Mobius.Broadcasters
 		
 		public bool IsEmpty ()
 		{
-			return true;
+			return false;
 		}
 	}
 }

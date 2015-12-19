@@ -9,6 +9,8 @@ namespace Tautalos.Unity.Mobius.Signals
 		ISignaller Signaller { get; }
 		
 		bool HasMessage ();
+		
+		bool IsEmpty ();
 	}
 }
 

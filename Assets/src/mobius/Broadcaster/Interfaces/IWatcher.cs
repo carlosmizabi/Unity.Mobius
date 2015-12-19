@@ -12,6 +12,8 @@ namespace Tautalos.Unity.Mobius.Broadcasters
 		
 		void Watch (IEventType eventType);
 		
+		bool IsEmpty ();
+		
 	} 
 }
 

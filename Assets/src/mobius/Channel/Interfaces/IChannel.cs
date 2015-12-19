@@ -34,5 +34,7 @@ namespace Tautalos.Unity.Mobius.Channels
 		void Emit (ISignal signal);
 		
 		ISignaller CreateSignaller ();
+		
+		bool IsEmpty ();
 	}
 }
