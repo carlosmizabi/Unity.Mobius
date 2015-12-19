@@ -8,14 +8,20 @@ namespace Tautalos.Unity.Mobius.Channels
 {
 	public class Channel: IChannel
 	{
-		public List<IBroadcaster> GetRegistry ()
+		IDictionary<IEventType, IBroadcaster> registry;
+		
+		public Channel ()
 		{
-			throw new System.NotImplementedException ();
+			registry = new Dictionary<IEventType, IBroadcaster> ();
+		}
+		public IDictionary<IEventType, IBroadcaster> GetRegistry ()
+		{
+			return registry;
 		}
 		
 		public void AddEventEntry (IEventEntry entry)
 		{
-			throw new System.NotImplementedException ();
+			GetRegistry ().Add (entry.EventType, entry.Broadcaster);
 		}
 		
 		public bool HasEventType (IEventType eventType)

@@ -8,7 +8,7 @@ namespace Tautalos.Unity.Mobius.Channels
 {
 	public interface IChannel
 	{
-		List<IBroadcaster> GetRegistry ();
+		IDictionary<IEventType, IBroadcaster> GetRegistry ();
 		
 		void AddEventEntry (IEventEntry entry);
 		

@@ -8,14 +8,57 @@ namespace Tautalos.Unity.Mobius.Tests
 	[TestFixture]
 	internal class ChannelTest
 	{
-		[ Test, Category("When Getting the Registry"),
-				Description("Given the registry is Empty")]
+		IChannel channel;
+		
+	
+		[SetUp] 
+		public void Init ()
+		{ 
+			channel = new Channel ();
+		
+		}
+		
+		[TearDown] 
+		public void Cleanup ()
+		{
+			channel = null;
+		}
+		
+		[ 	Test, 
+			Category("When Getting the Registry"),
+			Description("Given the registry is Empty")]
+			
 		public void ShouldReturnAnEmptyList ()
 		{
-			var channel = new Channel ();
 			var registry = channel.GetRegistry ();
 			Assert.IsNotNull (registry);
 		}
 		
+		[ 	Test,
+			Category("When registring events"),
+			Description("Given a new event type")]
+		
+		public void ShouldAddEvenTypeToRegistry ()
+		{
+			var entry = new EventEntryMock ();
+			channel.AddEventEntry (entry);
+			var registry = channel.GetRegistry ();
+			Assert.IsNotEmpty (registry);
+		}
+		
+		
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
