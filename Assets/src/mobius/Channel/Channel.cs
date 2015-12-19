@@ -21,8 +21,10 @@ namespace Tautalos.Unity.Mobius.Channels
 		
 		public void AddEventEntry (IEventEntry entry)
 		{
-			GetRegistry ().Add (entry.EventType, entry.Broadcaster);
-		}
+			if (entry != null && !entry.IsEmpty ()) {
+				GetRegistry ().Add (entry.EventType, entry.Broadcaster);
+			}
+		}	
 		
 		public bool HasEventType (IEventType eventType)
 		{
@@ -86,7 +88,7 @@ namespace Tautalos.Unity.Mobius.Channels
 		
 		public bool IsEmpty ()
 		{
-			return true;
+			return false;
 		}
 
 	}
