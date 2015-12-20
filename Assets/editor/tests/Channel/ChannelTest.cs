@@ -175,6 +175,27 @@ namespace Tautalos.Unity.Mobius.Tests
 			var collection = channel.GetEventTags ();
 			Assert.AreEqual (count, collection.Count);
 		}
+		
+		[Test,
+		 Category("When looking for event tag by name"),
+		 Description("Given the tag name is not present, it should return the empty EventTag")]
+		 
+		public void ShouldReturnTheEmptyEventTag ()
+		{
+			Assert.AreSame (EmptyEventTag.Instance, channel.GetEventTag ("NotPresent"));
+		}
+		
+		[Test,
+		 Category("When looking for event tag by name"),
+		 Description("Given the tag name is present, it should return the EventTag")]
+		
+		public void ShouldReturnTheFoundEventTag ()
+		{
+			var name = "SomeTag";
+			var tag = new EventTag (name);
+			channel.AddEvent (tag);
+			Assert.AreSame (tag, channel.GetEventTag (name));
+		}
 	}
 }
 

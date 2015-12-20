@@ -15,6 +15,12 @@ namespace Tautalos.Unity.Mobius.Channels
 			_registry = new Dictionary<IEventTag, IBroadcaster> ();
 		}
 		
+		public string Name {
+			get {
+				throw new NotImplementedException ();
+			}
+		}
+		
 		public IBroadcaster DefaultBroadcaster {
 			get { return _defaultBroadcaster; }
 		}
@@ -27,25 +33,9 @@ namespace Tautalos.Unity.Mobius.Channels
 			get { return ChannelHelper.IsEmptyChannel (this); } 
 		}
 
-		public ICollection GetEventTags ()
-		{
-			return Registry.Keys as ICollection;
-		}
-
-		public bool HasEventTag ()
-		{
-			throw new NotImplementedException ();
-		}
-
 		public void Silence ()
 		{
 			throw new NotImplementedException ();
-		}
-
-		public string Name {
-			get {
-				throw new NotImplementedException ();
-			}
 		}
 		
 		public void AddEventEntry (IEventEntry entry)
@@ -84,7 +74,19 @@ namespace Tautalos.Unity.Mobius.Channels
 		
 		public IEventTag GetEventTag (string tagName)
 		{
-			throw new System.NotImplementedException ();
+			IEventTag eventTag = EmptyEventTag.Instance;
+			foreach (IEventTag key in Registry.Keys) {
+				if (key.Name.Contains (tagName)) {
+					eventTag = key;
+					break;
+				}
+			}		
+			return eventTag;
+		}
+		
+		public ICollection GetEventTags ()
+		{
+			return Registry.Keys as ICollection;
 		}
 		
 		public List<IEventTag> GetEventEntries (IBroadcaster broadcaster)
