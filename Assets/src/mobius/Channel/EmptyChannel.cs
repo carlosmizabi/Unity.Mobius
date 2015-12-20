@@ -7,7 +7,7 @@ namespace Tautalos.Unity.Mobius.Channels
 {
 	public class EmptyChannel: IChannel
 	{		
-		string _name = "EmptyChannel";
+		string _name = "empty-channel";
 		
 		static IChannel StaticEmptyChannel = new EmptyChannel ();
 		public static IChannel Instance {
@@ -26,10 +26,6 @@ namespace Tautalos.Unity.Mobius.Channels
 			get { return ChannelHelper.IsEmptyChannel (this); } 
 		}
 		
-		public ICollection GetEventTags ()
-		{
-			return new List<EventTag> ();
-		}
 		
 		public bool HasEventTag ()
 		{
@@ -74,29 +70,29 @@ namespace Tautalos.Unity.Mobius.Channels
 			return EmptyEventTag.Instance;
 		}
 		
-		public List<IEventTag> GetEventEntries (IBroadcaster broadcaster)
+		public ICollection<IEventTag> GetEventTags (IBroadcaster broadcaster)
+		{
+			return GetAllEventTags ();
+		}
+		
+		public ICollection<IEventTag> GetAllEventTags ()
 		{
 			return new List<IEventTag> ();
 		}
 		
-		public IBroadcaster GetBroadcaster (string eventTagName)
+		public IBroadcaster GetBroadcasterNamed (string broadcasterName)
 		{
 			return EmptyBroadcaster.Instance;
 		}
 		
-		public IBroadcaster GetBroadcaster (IEventTag eventTag)
+		public IBroadcaster GetBroadcasterFor (string eventTagName)
 		{
 			return EmptyBroadcaster.Instance;
 		}
 		
-		public bool WhichEventTagsExist (EventTag[] eventTag)
+		public IBroadcaster GetBroadcasterFor (IEventTag eventTag)
 		{
-			return false;
-		}
-		
-		public bool WhichEventTagsExist (string[] tagNames)
-		{
-			return false;
+			return EmptyBroadcaster.Instance;
 		}
 		
 		public bool IsEmittable (ISignal signal)

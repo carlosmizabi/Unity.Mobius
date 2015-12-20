@@ -7,7 +7,7 @@ namespace Tautalos.Unity.Mobius.Broadcasters
 	{
 		string _name;
 		
-		public Broadcaster (string name = "ANONYMOUS")
+		public Broadcaster (string name = "anonymous-broadcaster")
 		{
 			_name = name;
 		}

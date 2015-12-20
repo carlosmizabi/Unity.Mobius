@@ -156,7 +156,7 @@ namespace Tautalos.Unity.Mobius.Tests
 		
 		public void ShouldGiveUsAnEmptyCollectionOfEventTags ()
 		{
-			Assert.IsEmpty (channel.GetEventTags ());
+			Assert.IsEmpty (channel.GetAllEventTags ());
 		}
 		
 		[Test,
@@ -172,7 +172,7 @@ namespace Tautalos.Unity.Mobius.Tests
 				channel.AddEvent (tag);
 				tags [i] = tag;
 			}
-			var collection = channel.GetEventTags ();
+			var collection = channel.GetAllEventTags ();
 			Assert.AreEqual (count, collection.Count);
 		}
 		
@@ -196,6 +196,101 @@ namespace Tautalos.Unity.Mobius.Tests
 			channel.AddEvent (tag);
 			Assert.AreSame (tag, channel.GetEventTag (name));
 		}
+		
+		[Test,
+		 Category("When looking for all event tags of registered to a Broadcaster"),
+		 Description("Given the Broadcaster is not registered, it should return an empty Collection")]
+		
+		public void ShouldReturnAnEmptyCollectionOfEventTags ()
+		{
+			Assert.IsEmpty (channel.GetEventTags (EmptyBroadcaster.Instance));
+		}
+		
+		[Test,
+		 Category("When looking for all event tags of registered to a Broadcaster"),
+		 Description("Given the Broadcaster is not registered, it should return an empty Collection")]
+		
+		public void ShouldReturnAnCollectionWithAllTheEventTags ()
+		{
+			var count = 12;
+			var tags = new EventTag[count];
+			
+			for (int i = 0; i < count; i++) {
+				var tag0 = new EventTag ("0_EVENT-" + i);
+				channel.AddEventEntry (new EventEntry (tag0, EmptyBroadcaster.Instance));
+				tags [i] = tag0;
+				
+				if (i % 2 == 0) {
+					var tag1 = new EventTag ("1_EVENT-" + i);
+					channel.AddEvent (tag1);
+					tags [i] = tag1;
+				}
+			}
+			Assert.AreEqual (count, channel.GetEventTags (EmptyBroadcaster.Instance).Count);
+			Assert.AreEqual (count / 2, channel.GetEventTags (channel.DefaultBroadcaster).Count);
+		}
+		
+		[Test,
+		 Category("When looking for the Broadcaster assigned to an EventTag"),
+		 Description("Given EventTag is not assigned to any Broadcaster, should return the EmptyBroadcaster")]
+		
+		public void ShouldReturnTheEmptyBroadcaster ()
+		{
+			Assert.AreSame (EmptyBroadcaster.Instance, channel.GetBroadcasterFor (EmptyEventTag.Instance));
+		}
+		
+		[Test,
+		 Category("When looking for the Broadcaster assigned to an EventTag"),
+		 Description("Given EventTag is assigned to a Broadcaster, should return the broadcaster")]
+		
+		public void ShouldReturnTheMatchingBroadcasterForEventTag ()
+		{
+			var eventTag = new EventTag ("AnEvent");
+			channel.AddEvent (eventTag);
+			Assert.AreSame (channel.DefaultBroadcaster, channel.GetBroadcasterFor (eventTag));
+		}
+		
+		[Test,
+		 Category("When looking for the Broadcaster assigned to an named EventTag"),
+		 Description("Given there is not Broadcaster assigned to that EventTag name, should return the EmptyBroadcaster")]
+		
+		public void ShouldReturnTheEmptyBroadcasterWhenNoEventTagIsFoundWithName ()
+		{
+			Assert.AreSame (EmptyBroadcaster.Instance, channel.GetBroadcasterFor (EmptyEventTag.Instance.Name));
+		}
+		
+		[Test,
+		 Category("When looking for the Broadcaster assigned to an named EventTag"),
+		 Description("Given the Broadcaster is a assigned to a EventTag with that " + 
+		  			 "matching name, it should return the Broadcaster")]
+		
+		public void ShouldReturnTheBroadcasterForTheEventTagMatchingTheName ()
+		{
+			var eventTag = new EventTag ("AnEvent");
+			channel.AddEvent (eventTag);
+			Assert.AreSame (channel.DefaultBroadcaster, channel.GetBroadcasterFor (eventTag.Name));
+		}
+		
+		[Test,
+		 Category("When looking for a Broadcaster by name"),
+		 Description("Given there is no Broadcaster registered with that name, it should return the EmptyBroadcaster")]
+		 
+		public void ShouldReturnTheEmptyBroadcasterWhenNoneMatchesTheName ()
+		{
+			Assert.AreSame (EmptyBroadcaster.Instance, channel.GetBroadcasterNamed (""));
+		}
+		
+		[Test,
+		 Category("When looking for a Broadcaster by name"),
+		 Description("Given there is no Broadcaster registered with that name, it should return the EmptyBroadcaster")]
+		
+		public void ShouldTheBroadcasterWhenWithTheMatchingName ()
+		{
+			var eventTag = new EventTag ("event-name");
+			channel.AddEvent (eventTag);
+			Assert.AreSame (channel.DefaultBroadcaster, channel.GetBroadcasterNamed ("default-broadcaster"));
+		}
+	
 	}
 }
 

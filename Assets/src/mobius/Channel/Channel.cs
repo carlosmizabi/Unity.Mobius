@@ -11,7 +11,7 @@ namespace Tautalos.Unity.Mobius.Channels
 	{
 		public Channel ()
 		{
-			_defaultBroadcaster = new Broadcaster ("DEFAULT_BROADCASTER");
+			_defaultBroadcaster = new Broadcaster ("default-broadcaster");
 			_registry = new Dictionary<IEventTag, IBroadcaster> ();
 		}
 		
@@ -84,34 +84,54 @@ namespace Tautalos.Unity.Mobius.Channels
 			return eventTag;
 		}
 		
-		public ICollection GetEventTags ()
+		public ICollection<IEventTag> GetAllEventTags ()
 		{
-			return Registry.Keys as ICollection;
+			return Registry.Keys as ICollection<IEventTag>;
 		}
 		
-		public List<IEventTag> GetEventEntries (IBroadcaster broadcaster)
+		public ICollection<IEventTag> GetEventTags (IBroadcaster broadcaster)
 		{
-			throw new System.NotImplementedException ();
+			var list = new List<IEventTag> ();
+			foreach (IEventTag tag in Registry.Keys) {
+				IBroadcaster b = Registry [tag];
+				if (b == broadcaster) {
+					list.Add (tag);
+				}
+			}
+			return list;
 		}
 		
-		public IBroadcaster GetBroadcaster (string eventTagName)
+		public IBroadcaster GetBroadcasterNamed (string broadcasterName)
 		{
-			throw new System.NotImplementedException ();
+			IBroadcaster broadcaster = EmptyBroadcaster.Instance;
+			foreach (IBroadcaster b in Registry.Values) {
+				if (b.Name == broadcasterName) {
+					broadcaster = b;
+					break;
+				}
+			}
+			return broadcaster;
 		}
 		
-		public IBroadcaster GetBroadcaster (IEventTag eventTag)
+		public IBroadcaster GetBroadcasterFor (string eventTagName)
 		{
-			throw new System.NotImplementedException ();
+			IBroadcaster broadcaster = EmptyBroadcaster.Instance;
+			var eventTag = GetEventTag (eventTagName);
+			if (eventTag != EmptyEventTag.Instance) {
+				broadcaster = Registry [eventTag];
+			}
+			return broadcaster;
 		}
 		
-		public bool WhichEventTagsExist (EventTag[] eventTag)
+		public IBroadcaster GetBroadcasterFor (IEventTag eventTag)
 		{
-			throw new System.NotImplementedException ();
-		}
-		
-		public bool WhichEventTagsExist (string[] tagNames)
-		{
-			throw new System.NotImplementedException ();
+			IBroadcaster broadcaster = EmptyBroadcaster.Instance;
+			if (eventTag != EmptyEventTag.Instance) {
+				IBroadcaster result;
+				Registry.TryGetValue (eventTag, out result);
+				broadcaster = result is Broadcaster ? result : broadcaster;
+			}
+			return broadcaster;
 		}
 		
 		public bool IsEmittable (ISignal signal)

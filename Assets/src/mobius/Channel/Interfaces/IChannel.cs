@@ -26,17 +26,15 @@ namespace Tautalos.Unity.Mobius.Channels
 		
 		IEventTag GetEventTag (string typeName);
 		
-		ICollection GetEventTags ();
+		ICollection<IEventTag> GetAllEventTags ();
 		
-		List<IEventTag> GetEventEntries (IBroadcaster broadcaster);
+		ICollection<IEventTag> GetEventTags (IBroadcaster broadcaster);
 		
-		IBroadcaster GetBroadcaster (string eventTagName);
+		IBroadcaster GetBroadcasterNamed (string broadcasterName);
 		
-		IBroadcaster GetBroadcaster (IEventTag eventTag);
+		IBroadcaster GetBroadcasterFor (string eventTagName);
 		
-		bool WhichEventTagsExist (EventTag[] eventTag);
-		
-		bool WhichEventTagsExist (string[] tagNames);
+		IBroadcaster GetBroadcasterFor (IEventTag eventTag);
 		
 		bool IsEmittable (ISignal signal);	
 			
