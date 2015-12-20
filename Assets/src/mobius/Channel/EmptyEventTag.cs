@@ -2,9 +2,7 @@ namespace Tautalos.Unity.Mobius.Channels
 {
 	public class EmptyEventTag: IEventTag
 	{
-		string _name = "EMPTY";
-		string _description = "";
-		
+		string _name = "EMPTY";		
 		static EmptyEventTag _instance = new EmptyEventTag ();
 		
 		public static EmptyEventTag Instance {
@@ -18,11 +16,6 @@ namespace Tautalos.Unity.Mobius.Channels
 		public string Name { 
 			get { return _name; }
 		}
-				
-		public string Description { 
-			get { return _description; } 
-		}
-		
 	}
 }
 

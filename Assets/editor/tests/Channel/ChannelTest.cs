@@ -3,6 +3,7 @@ using System.Collections;
 using NUnit.Framework;
 using Tautalos.Unity.Mobius.Channels;
 using Tautalos.Unity.Mobius.Broadcasters;
+using System.Collections.Generic;
 
 namespace Tautalos.Unity.Mobius.Tests
 {
@@ -10,13 +11,14 @@ namespace Tautalos.Unity.Mobius.Tests
 	internal class ChannelTest
 	{
 		IChannel channel;
+		IDictionary<IEventTag, IBroadcaster> registry;
 		
 	
 		[SetUp] 
 		public void Init ()
 		{ 
 			channel = new Channel ();
-		
+			registry = channel.Registry;
 		}
 		
 		[TearDown] 
@@ -40,19 +42,17 @@ namespace Tautalos.Unity.Mobius.Tests
 			
 		public void ShouldReturnAnEmptyList ()
 		{
-			var registry = channel.GetRegistry ();
 			Assert.IsNotNull (registry);
 		}
 		
 		[Test,
 		Category("When registering events"),
-		Description("Given a invalid event tag, it should not add it to the registry")]
+		Description("Given a invalid event tag, it should not add an invalid event tag to the registry")]
 		
 		public void ShouldNotAddInvalidEvenTagToRegistry ()
 		{
 			var entry = new EventEntry (EmptyEventTag.Instance, EmptyBroadcaster.Instance);
 			channel.AddEventEntry (entry);
-			var registry = channel.GetRegistry ();
 			Assert.IsEmpty (registry);
 		}
 		
@@ -64,7 +64,6 @@ namespace Tautalos.Unity.Mobius.Tests
 		{
 			var entry = new EventEntry (new EventTag ("TagName"), EmptyBroadcaster.Instance);
 			channel.AddEventEntry (entry);
-			var registry = channel.GetRegistry ();
 			Assert.IsNotEmpty (registry);
 		}
 		
@@ -77,10 +76,79 @@ namespace Tautalos.Unity.Mobius.Tests
 		{
 			var entry = new EmptyEventEntry ();
 			channel.AddEventEntry (entry);
-			var registry = channel.GetRegistry ();
 			Assert.IsEmpty (registry);
 		}
 		
+		[Test,
+		 Category("When registering events"),
+		 Description("Given a entry with an event tag already registered,"+ 
+		 			 "should not add a repeated event tag to the registry")]
+		
+		public void ShouldNotAddRepeatedEvenTagToRegistry ()
+		{
+			var entry1 = new EventEntry (new EventTag ("TagName"), EmptyBroadcaster.Instance);
+			var entry2 = new EventEntry (new EventTag ("TagName"), EmptyBroadcaster.Instance);
+			channel.AddEventEntry (entry1);
+			channel.AddEventEntry (entry2);
+			Assert.AreEqual (1, registry.Count);
+			Assert.IsTrue (registry.ContainsKey (entry1.EventTag));
+			Assert.IsFalse (registry.ContainsKey (entry2.EventTag));
+		}
+		
+		[Test,
+		 Category("When registering events"),
+		 Description("Given an EventTag without an explicit Broadcaster" + 
+		 			 ",it should be paired in the registry it the channel DefaultBroadcaster")]
+		
+		public void ShouldPairEventTagsToChannelDefaultBroadcaster ()
+		{
+			var eventTag = new EventTag ("PAIRED_TO_CHANNEL_DEFAUL_BROADCASTER");
+			channel.AddEvent (eventTag);
+			Assert.IsNotEmpty (registry);
+			Assert.IsTrue (channel.HasEventTag (eventTag));
+			IBroadcaster broadcaster = null;
+			channel.Registry.TryGetValue (eventTag, out broadcaster);
+			Assert.IsNotNull (broadcaster);
+			Assert.AreSame (channel.DefaultBroadcaster, broadcaster);
+		}
+		
+		[Test,
+		 Category("When checking the registry"),
+		 Description("Given Events Tags, it should inform us if they are, currently,  on the registry ")]
+		
+		public void ShouldInformUsIfAnEventTagIsRegistered ()
+		{
+			var count = 12;
+			var tags = new EventTag[count];
+			for (int i = 0; i < count; i++) {
+				var tag = new EventTag ("EVENT-" + i);
+				channel.AddEvent (tag);
+				tags [i] = tag;
+			}
+			Assert.AreEqual (count, channel.Registry.Count);
+			foreach (IEventTag tag in tags) {
+				Assert.IsTrue (channel.HasEventTag (tag));
+			}
+		}
+		
+		[Test,
+		 Category("When checking the registry"),
+		 Description("Given EventsTags Names, it should inform us if they are, currently, on the registry ")]
+		
+		public void ShouldInformUsIfAnNamedEventTagIsRegistered ()
+		{
+			var count = 12;
+			var tags = new EventTag[count];
+			for (int i = 0; i < count; i++) {
+				var tag = new EventTag ("EVENT-" + i);
+				channel.AddEvent (tag);
+				tags [i] = tag;
+			}
+			Assert.AreEqual (count, channel.Registry.Count);
+			foreach (IEventTag tag in tags) {
+				Assert.IsTrue (channel.HasEventTag (tag.Name));
+			}
+		}
 	}
 }
 

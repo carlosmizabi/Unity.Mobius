@@ -10,9 +10,13 @@ namespace Tautalos.Unity.Mobius.Channels
 	{
 		bool IsEmpty { get; }
 		
-		IDictionary<IEventTag, IBroadcaster> GetRegistry ();
+		IBroadcaster DefaultBroadcaster { get; }
+		
+		IDictionary<IEventTag, IBroadcaster> Registry { get; }
 		
 		void AddEventEntry (IEventEntry entry);
+		
+		void AddEvent (IEventTag eventTag);
 		
 		bool HasEventTag (IEventTag eventTag);
 		
@@ -26,7 +30,7 @@ namespace Tautalos.Unity.Mobius.Channels
 		
 		IBroadcaster GetBroadcaster (string eventTagName);
 		
-		IBroadcaster getBroadcaster (IEventTag eventTag);
+		IBroadcaster GetBroadcaster (IEventTag eventTag);
 		
 		bool WhichEventTagsExist (EventTag[] eventTag);
 		

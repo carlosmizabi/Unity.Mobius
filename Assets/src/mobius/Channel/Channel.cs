@@ -3,41 +3,78 @@ using System.Collections;
 using Tautalos.Unity.Mobius.Broadcasters;
 using System.Collections.Generic;
 using Tautalos.Unity.Mobius.Signals;
+using System;
 
 namespace Tautalos.Unity.Mobius.Channels
 {
 	public class Channel: IChannel
 	{
+		public Channel ()
+		{
+			_defaultBroadcaster = new Broadcaster ("DEFAULT_BROADCASTER");
+			_registry = new Dictionary<IEventTag, IBroadcaster> ();
+		}
+		
+		public IBroadcaster DefaultBroadcaster {
+			get { return _defaultBroadcaster; }
+		}
+		
+		public IDictionary<IEventTag, IBroadcaster> Registry {
+			get { return _registry; }
+		}
+		
 		public bool IsEmpty { 
 			get { return false; } 
 		}
-		
-		IDictionary<IEventTag, IBroadcaster> registry;
-		
-		public Channel ()
+
+		public IEventTag[] GetEventTags ()
 		{
-			registry = new Dictionary<IEventTag, IBroadcaster> ();
+			throw new NotImplementedException ();
 		}
-		public IDictionary<IEventTag, IBroadcaster> GetRegistry ()
+
+		public bool HasEventTag ()
 		{
-			return registry;
+			throw new NotImplementedException ();
+		}
+
+		public void Silence ()
+		{
+			throw new NotImplementedException ();
+		}
+
+		public string Name {
+			get {
+				throw new NotImplementedException ();
+			}
 		}
 		
 		public void AddEventEntry (IEventEntry entry)
 		{
-			if (entry != null && !entry.IsEmpty && !entry.EventTag.IsEmpty) {
-				GetRegistry ().Add (entry.EventTag, entry.Broadcaster);
+			if (_CanAddEntry (entry)) {
+				Registry.Add (entry.EventTag, entry.Broadcaster);
 			}
+		}
+		
+		public void AddEvent (IEventTag eventTag)
+		{
+			var entry = new EventEntry (eventTag, DefaultBroadcaster);
+			AddEventEntry (entry);
 		}	
 		
 		public bool HasEventTag (IEventTag eventTag)
 		{
-			throw new System.NotImplementedException ();
+			return Registry.ContainsKey (eventTag);
 		}
 		
 		public bool HasEventTag (string tagName)
 		{
-			throw new System.NotImplementedException ();
+			bool result = false;
+			foreach (IEventTag key in Registry.Keys) {
+				if (key.Name.Contains (tagName)) {
+					result = true;
+				}
+			}		
+			return result;
 		}
 		
 		public bool HasNamedBroadcaster (string name)
@@ -60,7 +97,7 @@ namespace Tautalos.Unity.Mobius.Channels
 			throw new System.NotImplementedException ();
 		}
 		
-		public IBroadcaster getBroadcaster (IEventTag eventTag)
+		public IBroadcaster GetBroadcaster (IEventTag eventTag)
 		{
 			throw new System.NotImplementedException ();
 		}
@@ -89,6 +126,26 @@ namespace Tautalos.Unity.Mobius.Channels
 		{
 			throw new System.NotImplementedException ();
 		}
+		
+		/********************************************************************
+		
+			Private
+		
+		*********************************************************************/
+		
+		IBroadcaster _defaultBroadcaster;
+		IDictionary<IEventTag, IBroadcaster> _registry;
+		
+		bool _CanAddEntry (IEventEntry entry)
+		{
+			return (
+				entry != null && 
+				!entry.IsEmpty && 
+				!entry.EventTag.IsEmpty &&
+				!HasEventTag (entry.EventTag.Name)
+			);
+		}
+		
 
 	}
 }
