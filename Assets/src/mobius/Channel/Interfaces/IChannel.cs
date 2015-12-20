@@ -26,6 +26,8 @@ namespace Tautalos.Unity.Mobius.Channels
 		
 		IEventTag GetEventTag (string typeName);
 		
+		ICollection GetEventTags ();
+		
 		List<IEventTag> GetEventEntries (IBroadcaster broadcaster);
 		
 		IBroadcaster GetBroadcaster (string eventTagName);

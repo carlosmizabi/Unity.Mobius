@@ -1,6 +1,7 @@
 using Tautalos.Unity.Mobius.Broadcasters;
 using System.Collections.Generic;
 using Tautalos.Unity.Mobius.Signals;
+using System.Collections;
 
 namespace Tautalos.Unity.Mobius.Channels
 {
@@ -25,9 +26,9 @@ namespace Tautalos.Unity.Mobius.Channels
 			get { return ChannelHelper.IsEmptyChannel (this); } 
 		}
 		
-		public IEventTag[] GetEventTags ()
+		public ICollection GetEventTags ()
 		{
-			return new EventTag[0];
+			return new List<EventTag> ();
 		}
 		
 		public bool HasEventTag ()

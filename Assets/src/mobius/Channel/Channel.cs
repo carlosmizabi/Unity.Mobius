@@ -27,9 +27,9 @@ namespace Tautalos.Unity.Mobius.Channels
 			get { return ChannelHelper.IsEmptyChannel (this); } 
 		}
 
-		public IEventTag[] GetEventTags ()
+		public ICollection GetEventTags ()
 		{
-			throw new NotImplementedException ();
+			return Registry.Keys as ICollection;
 		}
 
 		public bool HasEventTag ()
