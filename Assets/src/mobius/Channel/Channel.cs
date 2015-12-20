@@ -8,30 +8,34 @@ namespace Tautalos.Unity.Mobius.Channels
 {
 	public class Channel: IChannel
 	{
-		IDictionary<IEventType, IBroadcaster> registry;
+		public bool IsEmpty { 
+			get { return false; } 
+		}
+		
+		IDictionary<IEventTag, IBroadcaster> registry;
 		
 		public Channel ()
 		{
-			registry = new Dictionary<IEventType, IBroadcaster> ();
+			registry = new Dictionary<IEventTag, IBroadcaster> ();
 		}
-		public IDictionary<IEventType, IBroadcaster> GetRegistry ()
+		public IDictionary<IEventTag, IBroadcaster> GetRegistry ()
 		{
 			return registry;
 		}
 		
 		public void AddEventEntry (IEventEntry entry)
 		{
-			if (entry != null && !entry.IsEmpty ()) {
-				GetRegistry ().Add (entry.EventType, entry.Broadcaster);
+			if (entry != null && !entry.IsEmpty && !entry.EventTag.IsEmpty) {
+				GetRegistry ().Add (entry.EventTag, entry.Broadcaster);
 			}
 		}	
 		
-		public bool HasEventType (IEventType eventType)
+		public bool HasEventTag (IEventTag eventTag)
 		{
 			throw new System.NotImplementedException ();
 		}
 		
-		public bool HasEventType (string typeName)
+		public bool HasEventTag (string tagName)
 		{
 			throw new System.NotImplementedException ();
 		}
@@ -41,32 +45,32 @@ namespace Tautalos.Unity.Mobius.Channels
 			throw new System.NotImplementedException ();
 		}
 		
-		public IEventType GetEventType (string typeName)
+		public IEventTag GetEventTag (string tagName)
 		{
 			throw new System.NotImplementedException ();
 		}
 		
-		public List<IEventType> GetEventEntries (IBroadcaster broadcaster)
+		public List<IEventTag> GetEventEntries (IBroadcaster broadcaster)
 		{
 			throw new System.NotImplementedException ();
 		}
 		
-		public IBroadcaster GetBroadcaster (string eventType)
+		public IBroadcaster GetBroadcaster (string eventTagName)
 		{
 			throw new System.NotImplementedException ();
 		}
 		
-		public IBroadcaster getBroadcaster (IEventType eventType)
+		public IBroadcaster getBroadcaster (IEventTag eventTag)
 		{
 			throw new System.NotImplementedException ();
 		}
 		
-		public bool WhichEventTypesExist (EventType[] eventTypes)
+		public bool WhichEventTagsExist (EventTag[] eventTag)
 		{
 			throw new System.NotImplementedException ();
 		}
 		
-		public bool WhichEventTypesExist (string[] typeNames)
+		public bool WhichEventTagsExist (string[] tagNames)
 		{
 			throw new System.NotImplementedException ();
 		}
@@ -84,11 +88,6 @@ namespace Tautalos.Unity.Mobius.Channels
 		public ISignaller CreateSignaller ()
 		{
 			throw new System.NotImplementedException ();
-		}
-		
-		public bool IsEmpty ()
-		{
-			return false;
 		}
 
 	}

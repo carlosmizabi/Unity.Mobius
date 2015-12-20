@@ -7,6 +7,10 @@ namespace Tautalos.Unity.Mobius.Broadcasters
 	{
 		string _name = "EMPTY";
 		
+		public bool IsEmpty {
+			get { return false; }
+		}
+		
 		static EmptyBroadcaster _instance = new EmptyBroadcaster ();
 		
 		public static EmptyBroadcaster Instance {
@@ -17,25 +21,20 @@ namespace Tautalos.Unity.Mobius.Broadcasters
 			get { return _name; }
 		}
 		
-		public IEventType[] GetEventTypes ()
+		public IEventTag[] GetEventTags ()
 		{
 			return null;
 		}
 		
-		public bool HasEventType ()
+		public bool HasEventTag ()
 		{
 			return false;
 		}
 		
 		public void Silence ()
-		{
-			
+		{			
 		}
-		
-		public bool IsEmpty ()
-		{
-			return true;
-		}
+
 	}
 }
 

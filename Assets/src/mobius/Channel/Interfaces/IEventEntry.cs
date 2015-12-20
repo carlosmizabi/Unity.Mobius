@@ -4,10 +4,9 @@ namespace Tautalos.Unity.Mobius.Channels
 {
 	public interface IEventEntry
 	{
-		IEventType EventType { get; }
+		IEventTag EventTag { get; }
 		IBroadcaster Broadcaster { get; }
-		
-		bool IsEmpty ();
+		bool IsEmpty { get; }
 	}
 }
 

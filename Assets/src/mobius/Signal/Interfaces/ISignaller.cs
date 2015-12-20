@@ -7,16 +7,15 @@ namespace Tautalos.Unity.Mobius.Channels
 	{
 		object Owner { get; }
 		IChannel Channel { get; }
+		bool IsEmpty { get; }
 		
 		bool IsEmptySignaller ();
 		
-		ISignal CreateSignal (IEventType type, IMessage message);
+		ISignal CreateSignal (IEventTag eventTag, IMessage message);
 		
 		void emit (ISignal signal);
 		
 		void emit (ISignal[] signals);
-		
-		bool IsEmpty ();
 		
 	}
 }

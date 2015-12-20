@@ -7,13 +7,14 @@ namespace Tautalos.Unity.Mobius.Broadcasters
 	{
 		string Name { get; }
 		
-		IEventType[] GetEventTypes ();
+		bool IsEmpty { get; }
 		
-		bool HasEventType ();
+		IEventTag[] GetEventTags ();
+		
+		bool HasEventTag ();
 		
 		void Silence ();
 		
-		bool IsEmpty ();
 	}
 
 }

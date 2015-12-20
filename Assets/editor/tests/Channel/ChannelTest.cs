@@ -31,7 +31,7 @@ namespace Tautalos.Unity.Mobius.Tests
 		
 		public void ShouldNotBeTheEmptyChannel ()
 		{
-			Assert.IsFalse (channel.IsEmpty ());
+			Assert.IsFalse (channel.IsEmpty);
 		}	
 		
 		[Test, 
@@ -46,15 +46,28 @@ namespace Tautalos.Unity.Mobius.Tests
 		
 		[Test,
 		Category("When registering events"),
-		Description("Given a valid event type, it should add event to registry")]
+		Description("Given a invalid event tag, it should not add it to the registry")]
+		
+		public void ShouldNotAddInvalidEvenTagToRegistry ()
+		{
+			var entry = new EventEntry (EmptyEventTag.Instance, EmptyBroadcaster.Instance);
+			channel.AddEventEntry (entry);
+			var registry = channel.GetRegistry ();
+			Assert.IsEmpty (registry);
+		}
+		
+		[Test,
+		 Category("When registering events"),
+		 Description("Given a valid event entry, it should add event to registry")]
 		
 		public void ShouldAddEvenToRegistry ()
 		{
-			var entry = new EventEntry (EmptyEventType.Instance, EmptyBroadcaster.Instance);
+			var entry = new EventEntry (new EventTag ("TagName"), EmptyBroadcaster.Instance);
 			channel.AddEventEntry (entry);
 			var registry = channel.GetRegistry ();
 			Assert.IsNotEmpty (registry);
 		}
+		
 		
 		[Test,
 		 Category("When registering events"),

@@ -4,13 +4,13 @@ namespace Tautalos.Unity.Mobius.Broadcasters
 {
 	public interface IWatcher
 	{
-		void Stop (IEventType eventType);
+		void Stop (IEventTag eventTag);
 		
 		void StopAll ();
 		
-		void IsWatching (IEventType eventType);
+		void IsWatching (IEventTag eventTag);
 		
-		void Watch (IEventType eventType);
+		void Watch (IEventTag eventTag);
 		
 		bool IsEmpty ();
 		

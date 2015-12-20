@@ -5,8 +5,12 @@ namespace Tautalos.Unity.Mobius.Channels
 {
 	public class EmptyEventEntry: IEventEntry
 	{
-		IEventType _eventType = EmptyEventType.Instance;
+		IEventTag _eventTag = EmptyEventTag.Instance;
 		IBroadcaster _broadcaster = EmptyBroadcaster.Instance;
+		
+		public bool IsEmpty {
+			get { return true; }
+		}
 		
 		static EmptyEventEntry _instance = new EmptyEventEntry ();
 		
@@ -15,9 +19,9 @@ namespace Tautalos.Unity.Mobius.Channels
 		}
 		
 		
-		public IEventType EventType {
+		public IEventTag EventTag {
 			get {
-				return _eventType;
+				return _eventTag;
 			}
 		}
 		
@@ -25,11 +29,6 @@ namespace Tautalos.Unity.Mobius.Channels
 			get {
 				return _broadcaster;
 			}
-		}
-		
-		public bool IsEmpty ()
-		{
-			return true;
 		}	
 		
 	}

@@ -8,33 +8,34 @@ namespace Tautalos.Unity.Mobius.Channels
 {
 	public interface IChannel
 	{
-		IDictionary<IEventType, IBroadcaster> GetRegistry ();
+		bool IsEmpty { get; }
+		
+		IDictionary<IEventTag, IBroadcaster> GetRegistry ();
 		
 		void AddEventEntry (IEventEntry entry);
 		
-		bool HasEventType (IEventType eventType);
+		bool HasEventTag (IEventTag eventTag);
 		
-		bool HasEventType (string typeName);
+		bool HasEventTag (string typeName);
 		
 		bool HasNamedBroadcaster (string name);
 		
-		IEventType GetEventType (string typeName);
+		IEventTag GetEventTag (string typeName);
 		
-		List<IEventType> GetEventEntries (IBroadcaster broadcaster);
+		List<IEventTag> GetEventEntries (IBroadcaster broadcaster);
 		
-		IBroadcaster GetBroadcaster (string eventType);
+		IBroadcaster GetBroadcaster (string eventTagName);
 		
-		IBroadcaster getBroadcaster (IEventType eventType);
+		IBroadcaster getBroadcaster (IEventTag eventTag);
 		
-		bool WhichEventTypesExist (EventType[] eventTypes);
+		bool WhichEventTagsExist (EventTag[] eventTag);
 		
-		bool WhichEventTypesExist (string[] typeNames);
+		bool WhichEventTagsExist (string[] tagNames);
 		
 		bool IsEmittable (ISignal signal);		
 		void Emit (ISignal signal);
 		
 		ISignaller CreateSignaller ();
 		
-		bool IsEmpty ();
 	}
 }

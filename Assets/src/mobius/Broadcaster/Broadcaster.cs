@@ -16,12 +16,16 @@ namespace Tautalos.Unity.Mobius.Broadcasters
 			get { return _name; }
 		}
 		
-		public IEventType[] GetEventTypes ()
+		public bool IsEmpty {
+			get { return false; }
+		}
+		
+		public IEventTag[] GetEventTags ()
 		{
 			return null;
 		}
 		
-		public bool HasEventType ()
+		public bool HasEventTag ()
 		{
 			return false;
 		}
@@ -30,11 +34,7 @@ namespace Tautalos.Unity.Mobius.Broadcasters
 		{
 			
 		}
-		
-		public bool IsEmpty ()
-		{
-			return false;
-		}
+
 	}
 }
 
