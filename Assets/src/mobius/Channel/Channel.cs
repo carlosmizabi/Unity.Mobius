@@ -23,8 +23,8 @@ namespace Tautalos.Unity.Mobius.Channels
 			get { return _registry; }
 		}
 		
-		public bool IsEmpty { 
-			get { return false; } 
+		public   bool IsEmpty { 
+			get { return ChannelHelper.IsEmptyChannel (this); } 
 		}
 
 		public IEventTag[] GetEventTags ()
@@ -145,8 +145,6 @@ namespace Tautalos.Unity.Mobius.Channels
 				!HasEventTag (entry.EventTag.Name)
 			);
 		}
-		
-
 	}
 }
 

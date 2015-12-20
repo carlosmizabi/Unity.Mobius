@@ -36,7 +36,8 @@ namespace Tautalos.Unity.Mobius.Channels
 		
 		bool WhichEventTagsExist (string[] tagNames);
 		
-		bool IsEmittable (ISignal signal);		
+		bool IsEmittable (ISignal signal);	
+			
 		void Emit (ISignal signal);
 		
 		ISignaller CreateSignaller ();
