@@ -4,6 +4,7 @@ using NUnit.Framework;
 using Tautalos.Unity.Mobius.Channels;
 using Tautalos.Unity.Mobius.Broadcasters;
 using System.Collections.Generic;
+using Tautalos.Unity.Mobius.Signals;
 
 namespace Tautalos.Unity.Mobius.Tests
 {
@@ -28,8 +29,8 @@ namespace Tautalos.Unity.Mobius.Tests
 		}
 		
 		[Test, 
-		Category("When instanciated"),
-		Description("Given it is not the EmptyChanel, it should return false")]
+		Category("Given instanciation"),
+		Description("When it is not the EmptyChanel, Then it should return false")]
 		
 		public void ShouldNotBeTheEmptyChannel ()
 		{
@@ -37,8 +38,8 @@ namespace Tautalos.Unity.Mobius.Tests
 		}	
 		
 		[Test, 
-		Category("When Getting the Registry"),
-		Description("Given the registry is Empty, it should return an empty list")]
+		Category("Given we are Getting the Registry"),
+		Description("When the registry is Empty, Then it should return an empty list")]
 			
 		public void ShouldReturnAnEmptyList ()
 		{
@@ -46,8 +47,8 @@ namespace Tautalos.Unity.Mobius.Tests
 		}
 		
 		[Test,
-		Category("When registering events"),
-		Description("Given a invalid event tag, it should not add an invalid event tag to the registry")]
+		Category("Given we are a registering events"),
+		Description("When it has an invalid event tag, Thenit should not add an invalid event tag to the registry")]
 		
 		public void ShouldNotAddInvalidEvenTagToRegistry ()
 		{
@@ -57,8 +58,8 @@ namespace Tautalos.Unity.Mobius.Tests
 		}
 		
 		[Test,
-		 Category("When registering events"),
-		 Description("Given a valid event entry, it should add event to registry")]
+		 Category("Given we are a registering events"),
+		 Description("When there is a valid event entry, Then it should add event to registry")]
 		
 		public void ShouldAddEvenToRegistry ()
 		{
@@ -69,8 +70,8 @@ namespace Tautalos.Unity.Mobius.Tests
 		
 		
 		[Test,
-		 Category("When registering events"),
-		 Description("Given an invalid event entry, it should not add event to registry")]
+		 Category("Given we are a registering event"),
+		 Description("When it is an invalid event entry, Then it should not add event to registry")]
 		 
 		public void ShouldNotAddEvenToRegistry ()
 		{
@@ -80,9 +81,9 @@ namespace Tautalos.Unity.Mobius.Tests
 		}
 		
 		[Test,
-		 Category("When registering events"),
-		 Description("Given a entry with an event tag already registered,"+ 
-		 			 "should not add a repeated event tag to the registry")]
+		 Category("Given we are a registering event"),
+		 Description("When a entry with an event tag already registered,"+ 
+		 			 "Then it should not add a repeated event tag to the registry")]
 		
 		public void ShouldNotAddRepeatedEvenTagToRegistry ()
 		{
@@ -96,9 +97,9 @@ namespace Tautalos.Unity.Mobius.Tests
 		}
 		
 		[Test,
-		 Category("When registering events"),
-		 Description("Given an EventTag without an explicit Broadcaster" + 
-		 			 ",it should be paired in the registry it the channel DefaultBroadcaster")]
+		 Category("Given we are a registering event"),
+		 Description("When an EventTag without an explicit Broadcaster" + 
+		 			 ", Then it should be paired in the registry it the channel DefaultBroadcaster")]
 		
 		public void ShouldPairEventTagsToChannelDefaultBroadcaster ()
 		{
@@ -113,8 +114,8 @@ namespace Tautalos.Unity.Mobius.Tests
 		}
 		
 		[Test,
-		 Category("When checking the registry"),
-		 Description("Given Events Tags, it should inform us if they are, currently,  on the registry ")]
+		 Category("Given we are checking the registry"),
+		 Description("When there are Events Tags, Then it should inform us if they are, currently,  on the registry ")]
 		
 		public void ShouldInformUsIfAnEventTagIsRegistered ()
 		{
@@ -132,8 +133,8 @@ namespace Tautalos.Unity.Mobius.Tests
 		}
 		
 		[Test,
-		 Category("When checking the registry"),
-		 Description("Given EventsTags Names, it should inform us if they are, currently, on the registry ")]
+		 Category("Given we are checking the registry"),
+		 Description("When we provide EventsTags Names, Then it should inform us if they are, currently, on the registry ")]
 		
 		public void ShouldInformUsIfAnNamedEventTagIsRegistered ()
 		{
@@ -151,8 +152,8 @@ namespace Tautalos.Unity.Mobius.Tests
 		}
 		
 		[Test,
-		 Category("When getting all event tags"),
-		 Description("Given there are not tags, it should give us an empty collection EventTags")]
+		 Category("Given we are getting all event tags"),
+		 Description("When there are not tags, Then it should give us an empty collection EventTags")]
 		
 		public void ShouldGiveUsAnEmptyCollectionOfEventTags ()
 		{
@@ -160,8 +161,8 @@ namespace Tautalos.Unity.Mobius.Tests
 		}
 		
 		[Test,
-		 Category("When getting all event tags"),
-		 Description("Given there are tags, it should give us a collection of all the EventTags")]
+		 Category("Given we are getting all event tags"),
+		 Description("When there are tags, Then it should give us a collection of all the EventTags")]
 		
 		public void ShouldGiveUsAnCollectionWithAllEventTags ()
 		{
@@ -177,8 +178,8 @@ namespace Tautalos.Unity.Mobius.Tests
 		}
 		
 		[Test,
-		 Category("When looking for event tag by name"),
-		 Description("Given the tag name is not present, it should return the empty EventTag")]
+		 Category("Given we are looking for event tag by name"),
+		 Description("When the tag name is not present, Then it should return the empty EventTag")]
 		 
 		public void ShouldReturnTheEmptyEventTag ()
 		{
@@ -186,8 +187,8 @@ namespace Tautalos.Unity.Mobius.Tests
 		}
 		
 		[Test,
-		 Category("When looking for event tag by name"),
-		 Description("Given the tag name is present, it should return the EventTag")]
+		 Category("Given we are looking for event tag by name"),
+		 Description("When the tag name is present, Then it should return the EventTag")]
 		
 		public void ShouldReturnTheFoundEventTag ()
 		{
@@ -207,8 +208,8 @@ namespace Tautalos.Unity.Mobius.Tests
 		}
 		
 		[Test,
-		 Category("When looking for all event tags of registered to a Broadcaster"),
-		 Description("Given the Broadcaster is not registered, it should return an empty Collection")]
+		 Category("Given we are looking for all event tags of registered to a Broadcaster"),
+		 Description("When the Broadcaster is not registered, Then it should return an empty Collection")]
 		
 		public void ShouldReturnAnCollectionWithAllTheEventTags ()
 		{
@@ -231,8 +232,8 @@ namespace Tautalos.Unity.Mobius.Tests
 		}
 		
 		[Test,
-		 Category("When looking for the Broadcaster assigned to an EventTag"),
-		 Description("Given EventTag is not assigned to any Broadcaster, should return the EmptyBroadcaster")]
+		 Category("Given we are looking for the Broadcaster assigned to an EventTag"),
+		 Description("When the EventTag is not assigned to any Broadcaster, Then it should return the EmptyBroadcaster")]
 		
 		public void ShouldReturnTheEmptyBroadcaster ()
 		{
@@ -240,8 +241,8 @@ namespace Tautalos.Unity.Mobius.Tests
 		}
 		
 		[Test,
-		 Category("When looking for the Broadcaster assigned to an EventTag"),
-		 Description("Given EventTag is assigned to a Broadcaster, should return the broadcaster")]
+		 Category("Given we are looking for the Broadcaster assigned to an EventTag"),
+		 Description("When the EventTag is assigned to a Broadcaster, Then it should return the broadcaster")]
 		
 		public void ShouldReturnTheMatchingBroadcasterForEventTag ()
 		{
@@ -251,8 +252,8 @@ namespace Tautalos.Unity.Mobius.Tests
 		}
 		
 		[Test,
-		 Category("When looking for the Broadcaster assigned to an named EventTag"),
-		 Description("Given there is not Broadcaster assigned to that EventTag name, should return the EmptyBroadcaster")]
+		 Category("Given we are looking for the Broadcaster assigned to an named EventTag"),
+		 Description("When there is not Broadcaster assigned to that EventTag name, then it should return the EmptyBroadcaster")]
 		
 		public void ShouldReturnTheEmptyBroadcasterWhenNoEventTagIsFoundWithName ()
 		{
@@ -260,9 +261,9 @@ namespace Tautalos.Unity.Mobius.Tests
 		}
 		
 		[Test,
-		 Category("When looking for the Broadcaster assigned to an named EventTag"),
-		 Description("Given the Broadcaster is a assigned to a EventTag with that " + 
-		  			 "matching name, it should return the Broadcaster")]
+		 Category("Given we are looking for the Broadcaster assigned to an named EventTag"),
+		 Description("When the Broadcaster is a assigned to a EventTag with that " + 
+		  			 "matching name, Then it should return the Broadcaster")]
 		
 		public void ShouldReturnTheBroadcasterForTheEventTagMatchingTheName ()
 		{
@@ -272,8 +273,8 @@ namespace Tautalos.Unity.Mobius.Tests
 		}
 		
 		[Test,
-		 Category("When looking for a Broadcaster by name"),
-		 Description("Given there is no Broadcaster registered with that name, it should return the EmptyBroadcaster")]
+		 Category("Given we looking for a Broadcaster by name"),
+		 Description("When there is no Broadcaster registered with that name, Then it should return the EmptyBroadcaster")]
 		 
 		public void ShouldReturnTheEmptyBroadcasterWhenNoneMatchesTheName ()
 		{
@@ -281,8 +282,8 @@ namespace Tautalos.Unity.Mobius.Tests
 		}
 		
 		[Test,
-		 Category("When looking for a Broadcaster by name"),
-		 Description("Given there is no Broadcaster registered with that name, it should return the EmptyBroadcaster")]
+		 Category("Given we are looking for a Broadcaster by name"),
+		 Description("When there is no Broadcaster registered with that name, Then it should return the EmptyBroadcaster")]
 		
 		public void ShouldTheBroadcasterWhenWithTheMatchingName ()
 		{
@@ -291,6 +292,76 @@ namespace Tautalos.Unity.Mobius.Tests
 			Assert.AreSame (channel.DefaultBroadcaster, channel.GetBroadcasterNamed ("default-broadcaster"));
 		}
 	
+		[Test,
+		 Category("Given we are checking is broadcaster with a given name exist"),
+		 Description("When provided it names, Then it should return the truthfullness of the existence of matching broadcasters ")]
+		
+		public void ShouldReturnTheTruthfullnessOfGivenNamedBroadcasterInRegistry ()
+		{
+			Assert.IsFalse (channel.HasNamedBroadcaster ("default-broadcaster"));
+			var eventTag = new EventTag ("event-name");
+			channel.AddEvent (eventTag);
+			Assert.IsTrue (channel.HasNamedBroadcaster ("default-broadcaster"));
+		}
+		
+		[Test,
+		 Category("Given we are verifying if a Signal is emmitable"),
+		 Description("When the signal has an Event Tag not registered, Then it should be give a negative answer")]
+		 
+		public void ShouldAnwerNegativeToASignalWithANonRegisteredEventTag ()
+		{
+			var signal = EmptySignal.Instance;
+			Assert.IsFalse (channel.IsEmittable (signal));
+		}
+		
+		[Test,
+		 Category("Given we are verifying if a Signal is emmitable"),
+		 Description("When the Signal has an Event Tag registered, Then it should be give a positive answer")]
+		
+		public void ShouldAnwerPositiveToASignalWithARegisteredEventTag ()
+		{
+			var tag = new EventTag ("some-event");
+			var signaller = new Signaller (owner: this, channel: channel);
+			channel.AddEvent (tag);
+			var signal = signaller.CreateSignal (
+				eventTag: tag,
+				message: EmptyMessage.Instance
+			);
+			Assert.IsTrue (channel.IsEmittable (signal));
+		}
+		
+		[Test,
+		 Category("Given the Channel"),
+		 Description("When we ask for a signaller, Then it should return a signaller with itself as its channel")]
+		 
+		public void ShouldReturnASignallerWithItselfAsTheChannel ()
+		{
+			var signaller = channel.CreateSignaller (owner: this);
+			Assert.AreSame (channel, signaller.Channel);
+		}
+		
+		[Test,
+		 Category("Given the Channel"),
+		 Description("When we ask for a signaller with a null owner, Then it should return the EmptySignaller")]
+		
+		public void ShouldReturnTheEmptySignaller ()
+		{
+			var signaller = channel.CreateSignaller (owner: null);
+			Assert.AreSame (EmptySignaller.Instance, signaller);
+		}
+		
+		[Test,
+		 Category("Given a Channel"),
+		 Description("When emit a Signal on the Channel, Then it should be passed to the appropriate Broadcaster")]
+		 
+		public void ShouldRelaySignalToAppropriateBroadcaster ()
+		{
+			var tag = new EventTag ("test-event");
+			channel.AddEvent (tag);
+			var signal = new Signal (eventTag: tag, signaller: this, message: null);
+			channel.Emit (signal);
+		}
+		
 	}
 }
 

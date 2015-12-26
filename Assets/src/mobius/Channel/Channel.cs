@@ -9,15 +9,16 @@ namespace Tautalos.Unity.Mobius.Channels
 {
 	public class Channel: IChannel
 	{
-		public Channel ()
+		public Channel (string name = "anonymous-channel")
 		{
+			_name = name;
 			_defaultBroadcaster = new Broadcaster ("default-broadcaster");
 			_registry = new Dictionary<IEventTag, IBroadcaster> ();
 		}
 		
 		public string Name {
 			get {
-				throw new NotImplementedException ();
+				return _name;
 			}
 		}
 		
@@ -31,11 +32,6 @@ namespace Tautalos.Unity.Mobius.Channels
 		
 		public   bool IsEmpty { 
 			get { return ChannelHelper.IsEmptyChannel (this); } 
-		}
-
-		public void Silence ()
-		{
-			throw new NotImplementedException ();
 		}
 		
 		public void AddEventEntry (IEventEntry entry)
@@ -69,7 +65,8 @@ namespace Tautalos.Unity.Mobius.Channels
 		
 		public bool HasNamedBroadcaster (string name)
 		{
-			throw new System.NotImplementedException ();
+			var broadcaster = GetBroadcasterNamed (name);
+			return broadcaster.Name == name;
 		}
 		
 		public IEventTag GetEventTag (string tagName)
@@ -86,7 +83,7 @@ namespace Tautalos.Unity.Mobius.Channels
 		
 		public ICollection<IEventTag> GetAllEventTags ()
 		{
-			return Registry.Keys as ICollection<IEventTag>;
+			return Registry.Keys;
 		}
 		
 		public ICollection<IEventTag> GetEventTags (IBroadcaster broadcaster)
@@ -136,7 +133,11 @@ namespace Tautalos.Unity.Mobius.Channels
 		
 		public bool IsEmittable (ISignal signal)
 		{
-			throw new System.NotImplementedException ();
+			var isEmittable = false;
+			if (signal != null && signal.Signaller.Channel == this) {
+				isEmittable = HasEventTag (signal.EventTag);
+			}
+			return isEmittable;
 		}
 		
 		public void Emit (ISignal signal)
@@ -144,9 +145,18 @@ namespace Tautalos.Unity.Mobius.Channels
 			throw new System.NotImplementedException ();
 		}
 		
-		public ISignaller CreateSignaller ()
+		public void Silence ()
 		{
-			throw new System.NotImplementedException ();
+			throw new NotImplementedException ();
+		}
+		
+		public ISignaller CreateSignaller (object owner)
+		{
+			ISignaller signaller = EmptySignaller.Instance;
+			if (owner != null) {
+				signaller = new Signaller (owner: owner, channel: this);
+			}
+			return signaller;
 		}
 		
 		/********************************************************************
@@ -155,6 +165,7 @@ namespace Tautalos.Unity.Mobius.Channels
 		
 		*********************************************************************/
 		
+		string _name;
 		IBroadcaster _defaultBroadcaster;
 		IDictionary<IEventTag, IBroadcaster> _registry;
 		

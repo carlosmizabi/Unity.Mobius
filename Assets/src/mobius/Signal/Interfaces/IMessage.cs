@@ -4,7 +4,7 @@ namespace Tautalos.Unity.Mobius.Signals
 	{
 		string Header { get; }
 		object Body { get; }
-		string Footer { get; }
+		object Footer { get; }
 		bool IsEmpty { get; }
 	}
 }

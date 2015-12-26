@@ -104,7 +104,7 @@ namespace Tautalos.Unity.Mobius.Channels
 		{	
 		}
 		
-		public ISignaller CreateSignaller ()
+		public ISignaller CreateSignaller (object owner)
 		{
 			return null;
 		}

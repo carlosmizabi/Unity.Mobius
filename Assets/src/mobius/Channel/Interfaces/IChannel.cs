@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Tautalos.Unity.Mobius.Broadcasters;
 using Tautalos.Unity.Mobius.Signals;
 
@@ -40,7 +38,7 @@ namespace Tautalos.Unity.Mobius.Channels
 			
 		void Emit (ISignal signal);
 		
-		ISignaller CreateSignaller ();
+		ISignaller CreateSignaller (object owner);
 		
 	}
 }
