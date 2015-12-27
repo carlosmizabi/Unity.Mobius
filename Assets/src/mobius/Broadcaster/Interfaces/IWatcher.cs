@@ -14,6 +14,10 @@ namespace Tautalos.Unity.Mobius.Broadcasters
 		
 		void Watch (IEventTag eventTag);
 		
+		void Watch (IEventTag eventTag, IBroadcaster broadcaster);
+		
+		void WatchAll (IBroadcaster broadcaster);
+		
 		bool IsEmpty { get; }
 		
 	} 

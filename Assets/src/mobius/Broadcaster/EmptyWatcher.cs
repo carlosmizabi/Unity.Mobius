@@ -6,7 +6,7 @@ namespace Tautalos.Unity.Mobius.Broadcasters
 {
 	public class EmptyWatcher: IWatcher
 	{
-		static IWatcher _instance = new Watcher ();
+		static IWatcher _instance = new EmptyWatcher ();
 		
 		public static IWatcher Instance {
 			get { return _instance; }
@@ -23,6 +23,14 @@ namespace Tautalos.Unity.Mobius.Broadcasters
 		public bool IsWatching (IEventTag eventTag)
 		{
 			return false;
+		}
+		
+		public void Watch (IEventTag eventTag, IBroadcaster broadcaster)
+		{
+		}
+
+		public void WatchAll (IBroadcaster broadcaster)
+		{
 		}
 
 		public void Watch (IEventTag eventTag)
