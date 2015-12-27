@@ -17,6 +17,13 @@ namespace Tautalos.Unity.Mobius.Channels
 		public IBroadcaster DefaultBroadcaster {
 			get { return EmptyBroadcaster.Instance; }
 		}
+
+
+		public System.IDisposable Subscribe (IBroadcaster broadcaster)
+		{
+			return null;
+		}
+
 		
 		public IDictionary<IEventTag, IBroadcaster> Registry {
 			get { return new Dictionary<IEventTag, IBroadcaster> (); }

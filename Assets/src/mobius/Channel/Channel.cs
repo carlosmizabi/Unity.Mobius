@@ -4,6 +4,7 @@ using Tautalos.Unity.Mobius.Broadcasters;
 using System.Collections.Generic;
 using Tautalos.Unity.Mobius.Signals;
 using System;
+using UniRx;
 
 namespace Tautalos.Unity.Mobius.Channels
 {
@@ -12,8 +13,9 @@ namespace Tautalos.Unity.Mobius.Channels
 		public Channel (string name = "anonymous-channel")
 		{
 			_name = name;
-			_defaultBroadcaster = new Broadcaster ("default-broadcaster");
-			_registry = new Dictionary<IEventTag, IBroadcaster> ();
+			_SetupSubject ();
+			_registry = new Dictionary<IEventTag, IBroadcaster> ();	
+			_defaultBroadcaster = new Broadcaster (channel: this, eventTags: null, name: "default-broadcaster");
 		}
 		
 		public string Name {
@@ -32,6 +34,16 @@ namespace Tautalos.Unity.Mobius.Channels
 		
 		public   bool IsEmpty { 
 			get { return ChannelHelper.IsEmptyChannel (this); } 
+		}
+		
+		public IDisposable Subscribe (IBroadcaster broadcaster)
+		{
+			IDisposable subscription = null;
+			if (broadcaster != null && broadcaster != EmptyBroadcaster.Instance) {
+				_RegisterBroadcasterEventTags (broadcaster);
+				subscription = _SubscribeBroadcaster (broadcaster);
+			}
+			return subscription;
 		}
 		
 		public void AddEventEntry (IEventEntry entry)
@@ -166,6 +178,8 @@ namespace Tautalos.Unity.Mobius.Channels
 		*********************************************************************/
 		
 		string _name;
+		ISubject<ISignal> _subject;
+		IDisposable _subscription;
 		IBroadcaster _defaultBroadcaster;
 		IDictionary<IEventTag, IBroadcaster> _registry;
 		
@@ -177,6 +191,30 @@ namespace Tautalos.Unity.Mobius.Channels
 				!entry.EventTag.IsEmpty &&
 				!HasEventTag (entry.EventTag.Name)
 			);
+		}
+		
+		void _SetupSubject ()
+		{
+			_subject = new Subject<ISignal> ();
+		}
+		
+		IDisposable _SubscribeBroadcaster (IBroadcaster broadcaster)
+		{
+			var channel = this;
+			var subscription = _subject
+				.Where (signal => {
+				return (channel.GetBroadcasterFor (signal.EventTag) == broadcaster);
+			})
+					.Subscribe (broadcaster);
+			return subscription;
+		}
+		
+		void _RegisterBroadcasterEventTags (IBroadcaster broadcaster)
+		{
+			foreach (IEventTag tag in broadcaster.GetEventTags()) {
+				var entry = new EventEntry (eventTag: tag, broadcaster: broadcaster);
+				AddEventEntry (entry);
+			}
 		}
 	}
 }

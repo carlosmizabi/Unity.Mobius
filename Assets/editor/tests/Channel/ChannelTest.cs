@@ -5,6 +5,7 @@ using Tautalos.Unity.Mobius.Channels;
 using Tautalos.Unity.Mobius.Broadcasters;
 using System.Collections.Generic;
 using Tautalos.Unity.Mobius.Signals;
+using System;
 
 namespace Tautalos.Unity.Mobius.Tests
 {
@@ -26,6 +27,7 @@ namespace Tautalos.Unity.Mobius.Tests
 		public void Cleanup ()
 		{
 			channel = null;
+			registry = null;
 		}
 		
 		[Test, 
@@ -99,7 +101,7 @@ namespace Tautalos.Unity.Mobius.Tests
 		[Test,
 		 Category("Given we are a registering event"),
 		 Description("When an EventTag without an explicit Broadcaster" + 
-		 			 ", Then it should be paired in the registry it the channel DefaultBroadcaster")]
+		 			 "Then it should be paired in the registry it the channel DefaultBroadcaster")]
 		
 		public void ShouldPairEventTagsToChannelDefaultBroadcaster ()
 		{
@@ -352,14 +354,41 @@ namespace Tautalos.Unity.Mobius.Tests
 		
 		[Test,
 		 Category("Given a Channel"),
+		 Description("When we subscribe a Broadcaster, Then it should register all its EventTags")]
+		 
+		public void ShouldRegisterBroadcasterEventTagsOnSubscription ()
+		{
+			var eventTags = new EventTag[]{ 
+				new EventTag ("event-one"), 
+				new EventTag ("event-two"),
+			};
+			var bc = new Broadcaster (channel: channel, eventTags: eventTags);
+			foreach (IEventTag tag in eventTags) {
+				Assert.IsTrue (channel.HasEventTag (tag));
+			}
+		}
+		
+		[Test,
+		 Category("Given a Channel"),
+		 Description("When we subscribe a Broadcaster, Then it should return a disposable subscription")]
+		
+		public void ShouldReturnADisposableSubscription ()
+		{
+			var tags = new IEventTag[]{ new EventTag ("some-event") };
+			var bc = new Broadcaster (channel, tags);
+			Assert.IsInstanceOf<IDisposable> (channel.Subscribe (bc));
+		}
+		
+		[Test,
+		 Category("Given a Channel"),
 		 Description("When emit a Signal on the Channel, Then it should be passed to the appropriate Broadcaster")]
 		 
 		public void ShouldRelaySignalToAppropriateBroadcaster ()
 		{
 			var tag = new EventTag ("test-event");
 			channel.AddEvent (tag);
-			var signal = new Signal (eventTag: tag, signaller: this, message: null);
-			channel.Emit (signal);
+			var signal = new Signal (eventTag: tag, signaller: EmptySignaller.Instance, message: null);
+//			channel.Emit (signal);
 		}
 		
 	}

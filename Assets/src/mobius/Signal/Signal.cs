@@ -1,4 +1,5 @@
 using Tautalos.Unity.Mobius.Channels;
+using System;
 
 namespace Tautalos.Unity.Mobius.Signals
 {

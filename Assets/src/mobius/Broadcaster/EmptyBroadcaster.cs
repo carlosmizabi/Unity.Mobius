@@ -5,14 +5,22 @@ namespace Tautalos.Unity.Mobius.Broadcasters
 {
 	public class EmptyBroadcaster: IBroadcaster
 	{
+
+		static EmptyBroadcaster _instance = new EmptyBroadcaster ();
+		static IEventTag[] _eventTags = new IEventTag[0];
+		
 		string _name = "EMPTY";
 		
-		public bool IsEmpty {
-			get { return false; }
+		public IChannel Channel {
+			get {
+				return EmptyChannel.Instance;
+			}
 		}
 		
-		static EmptyBroadcaster _instance = new EmptyBroadcaster ();
-		
+		public bool IsEmpty {
+			get { return true; }
+		}
+				
 		public static EmptyBroadcaster Instance {
 			get { return _instance; }
 		}
@@ -23,10 +31,10 @@ namespace Tautalos.Unity.Mobius.Broadcasters
 		
 		public IEventTag[] GetEventTags ()
 		{
-			return null;
+			return _eventTags;
 		}
 		
-		public bool HasEventTag ()
+		public bool HasEventTag (IEventTag eventTag)
 		{
 			return false;
 		}
@@ -35,6 +43,15 @@ namespace Tautalos.Unity.Mobius.Broadcasters
 		{			
 		}
 
+		public void OnCompleted ()
+		{
+		}
+		public void OnError (System.Exception error)
+		{
+		}
+		public void OnNext (Tautalos.Unity.Mobius.Signals.ISignal value)
+		{
+		}
 	}
 }
 

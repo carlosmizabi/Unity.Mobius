@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Tautalos.Unity.Mobius.Broadcasters;
 using Tautalos.Unity.Mobius.Signals;
+using System;
 
 namespace Tautalos.Unity.Mobius.Channels
 {
@@ -8,11 +9,15 @@ namespace Tautalos.Unity.Mobius.Channels
 	{
 		bool IsEmpty { get; }
 		
+		string Name { get; }
+		
 		IBroadcaster DefaultBroadcaster { get; }
 		
 		IDictionary<IEventTag, IBroadcaster> Registry { get; }
-		
+				
 		void AddEventEntry (IEventEntry entry);
+		
+		IDisposable Subscribe (IBroadcaster broadcaster);
 		
 		void AddEvent (IEventTag eventTag);
 		
