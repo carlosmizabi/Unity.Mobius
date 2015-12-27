@@ -201,11 +201,10 @@ namespace Tautalos.Unity.Mobius.Channels
 		IDisposable _SubscribeBroadcaster (IBroadcaster broadcaster)
 		{
 			var channel = this;
-			var subscription = _subject
-				.Where (signal => {
+			var subscription = _subject.Where (signal => {
 				return (channel.GetBroadcasterFor (signal.EventTag) == broadcaster);
 			})
-					.Subscribe (broadcaster);
+			.Subscribe (broadcaster);
 			return subscription;
 		}
 		
