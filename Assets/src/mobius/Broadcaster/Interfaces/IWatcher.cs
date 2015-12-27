@@ -1,18 +1,20 @@
 using Tautalos.Unity.Mobius.Channels;
+using UniRx;
+using Tautalos.Unity.Mobius.Signals;
 
 namespace Tautalos.Unity.Mobius.Broadcasters
 {
-	public interface IWatcher
+	public interface IWatcher: IObserver<ISignal>
 	{
 		void Stop (IEventTag eventTag);
 		
 		void StopAll ();
 		
-		void IsWatching (IEventTag eventTag);
+		bool IsWatching (IEventTag eventTag);
 		
 		void Watch (IEventTag eventTag);
 		
-		bool IsEmpty ();
+		bool IsEmpty { get; }
 		
 	} 
 }
