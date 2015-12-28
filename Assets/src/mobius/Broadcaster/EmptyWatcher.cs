@@ -34,7 +34,16 @@ namespace Tautalos.Unity.Mobius.Broadcasters
 			return false;
 		}
 		
-		public void Watch (IEventTag eventTag, IBroadcaster broadcaster)
+		public bool IsWatchingAll (IBroadcaster broadcaster)
+		{
+			return false;
+		}
+		
+		public void Watch (IBroadcaster broadcaster, IEventTag eventTag)
+		{
+		}
+		
+		public void Watch (IBroadcaster broadcaster, IEventTag[] eventTag)
 		{
 		}
 

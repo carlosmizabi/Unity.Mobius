@@ -144,28 +144,123 @@ namespace Tautalos.Unity.Mobius.Tests
 		
 		[Test,
 		 Category("Given a Watcher"),
-		 Description("When observing an EventTag from a Broadcaster, Then it should process only those broadcasts")]
+		 Description("When observing some EventTags from a Broadcaster, Then it should process only those broadcasts")]
 		public void ShouldProcessOnlyGivenEventTags ()
 		{
 			var eventTag_1 = new EventTag ("event-one");
 			var eventTag_2 = new EventTag ("event-two");
-			var eventTags = new EventTag[]{ eventTag_1, eventTag_2};
+			var eventTag_3 = new EventTag ("event-three");
+			var eventTags = new EventTag[]{ eventTag_1, eventTag_2, eventTag_3};
 			var channel = new Channel ();
 			var broadcaster = new Broadcaster (channel, eventTags, "the-broadcaster");
 			var signaller = new Signaller (channel: channel, owner: this);
 			var signal_1 = new Signal (signaller, eventTag_1, null);
 			var signal_2 = new Signal (signaller, eventTag_2, null);
+			var signal_3 = new Signal (signaller, eventTag_3, null);
 			
-			var observedSignals = new List<ISignal> ();
+			var observedSignals = new List<String> ();
 			var watcher = new Watcher (onSignal: (signal) => {
-				observedSignals.Add (signal);
+				observedSignals.Add (signal.EventTag.Name);
 			});
-			watcher.Watch (eventTag_1, broadcaster);
+			watcher.Watch (broadcaster, new IEventTag[]{ eventTag_1, eventTag_3 });
+			
+			channel.Emit (signal_1); // yes
+			channel.Emit (signal_2); // no
+			channel.Emit (signal_1); // yes
+			channel.Emit (signal_3); // yes
+			channel.Emit (signal_2); // no
+			
+			Assert.AreEqual (3, observedSignals.Count);
+			Assert.Contains (signal_1.EventTag.Name, observedSignals);
+		}
+		
+		[Test,
+		 Category("Given a Watcher"),
+		 Description("When asking if it observing and EventTag, Then it should answer accurately")]
+		public void ShouldInformUsIfItOrNotWatchingAGivenEventTag ()
+		{
+			var eventTag_1 = new EventTag ("event-one");
+			var eventTag_2 = new EventTag ("event-two");
+			var eventTag_3 = new EventTag ("event-three");
+			var eventTags = new EventTag[]{ eventTag_1, eventTag_2, eventTag_3};
+			var channel = new Channel ();
+			var broadcaster = new Broadcaster (channel, eventTags, "the-broadcaster");
+			var watcher = new Watcher (onSignal: (signal) => {});
+			watcher.Watch (broadcaster, new IEventTag[]{ eventTag_1, eventTag_3 });
+			
+			Assert.IsTrue (watcher.IsWatching (eventTag_1));
+			Assert.IsTrue (watcher.IsWatching (eventTag_3));
+			Assert.IsFalse (watcher.IsWatching (eventTag_2));
+			Assert.IsFalse (watcher.IsWatching (null));
+		}
+		
+		[Test,
+		 Category("Given a Watcher"),
+		 Description("When asking if it observing all EventTags from an Broadcaster, Then it should answer accurately")]
+		public void ShouldInformUsIfItOrNotWatchingAllBroadcasterTags ()
+		{
+			var eventTag_1 = new EventTag ("event-one");
+			var eventTag_2 = new EventTag ("event-two");
+			var eventTag_3 = new EventTag ("event-three");
+			var allEventTags = new EventTag[]{ eventTag_1, eventTag_2, eventTag_3};
+			var channel = new Channel ();
+			var broadcaster = new Broadcaster (channel, allEventTags, "the-broadcaster");
+			var watcher = new Watcher (onSignal: (signal) => {});
+			watcher.Watch (broadcaster, new IEventTag[]{ eventTag_1, eventTag_3 });
+			
+			Assert.IsFalse (watcher.IsWatchingAll (broadcaster));
+			watcher.Watch (broadcaster, allEventTags);
+			Assert.IsTrue (watcher.IsWatchingAll (broadcaster));
+		}
+		
+		[Test,
+		 Category("Given a Watcher"),
+		 Description("When a watcher is stopped, Then it should no longer observer any Broadcaster")]
+		public void ShouldStopObservingAllBroadcasters ()
+		{
+			var eventTag_1 = new EventTag ("event-one");
+			var eventTag_2 = new EventTag ("event-two");	
+			var eventTag_3 = new EventTag ("event-three");
+			
+			var channel = new Channel ("channel-one");
+			
+			var broadcaster_1 = new Broadcaster (channel, new IEventTag[]{ eventTag_1 }, "b-1");
+			var broadcaster_2 = new Broadcaster (channel, new IEventTag[]{ eventTag_2 }, "b-2");
+			var broadcaster_3 = new Broadcaster (channel, new IEventTag[]{ eventTag_3 }, "tb-3");
+			
+			var signaller_1 = new Signaller (channel: channel, owner: this);
+			var signal_1 = new Signal (signaller_1, eventTag_1, null);
+			var signal_2 = new Signal (signaller_1, eventTag_2, null);
+			var signal_3 = new Signal (signaller_1, eventTag_3, null);
+			
+			var observedSignals = new List<String> ();
+			var watcher = new Watcher (onSignal: (signal) => {
+				observedSignals.Add (signal.EventTag.Name);
+			});
+			watcher.WatchAll (broadcaster_1);
+			watcher.WatchAll (broadcaster_2);
+			watcher.WatchAll (broadcaster_3);
+			
 			channel.Emit (signal_1);
 			channel.Emit (signal_2);
+			channel.Emit (signal_3);
 			
+			Assert.AreEqual (3, observedSignals.Count);
+			
+			watcher.Stop ();
+			
+			observedSignals.Clear ();
+			
+			channel.Emit (signal_1);
+			channel.Emit (signal_2);
+			channel.Emit (signal_3);
+			
+			Assert.IsEmpty (observedSignals);
+			
+			watcher.WatchAll (broadcaster_1);
+			channel.Emit (signal_1);
+			channel.Emit (signal_2);
 			Assert.AreEqual (1, observedSignals.Count);
-			Assert.Contains (signal_1, observedSignals);
 		}
 	}
 }
