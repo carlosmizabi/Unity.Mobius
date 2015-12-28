@@ -33,7 +33,7 @@ namespace Tautalos.Unity.Mobius.Channels
 		}
 		
 		public   bool IsEmpty { 
-			get { return ChannelHelper.IsEmptyChannel (this); } 
+			get { return false; } 
 		}
 		
 		public IDisposable Subscribe (IBroadcaster broadcaster)
@@ -154,9 +154,7 @@ namespace Tautalos.Unity.Mobius.Channels
 		
 		public void Emit (ISignal signal)
 		{
-			if (signal != null && 
-				signal.Signaller.Channel == this && 
-				Registry.ContainsKey (signal.EventTag)) {
+			if (IsEmittable (signal)) {
 			    
 				_subject.OnNext (signal);
 			}

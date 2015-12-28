@@ -362,7 +362,7 @@ namespace Tautalos.Unity.Mobius.Tests
 				new EventTag ("event-one"), 
 				new EventTag ("event-two"),
 			};
-			var bc = new Broadcaster (channel: channel, eventTags: eventTags);
+			new Broadcaster (channel: channel, eventTags: eventTags);
 			foreach (IEventTag tag in eventTags) {
 				Assert.IsTrue (channel.HasEventTag (tag));
 			}

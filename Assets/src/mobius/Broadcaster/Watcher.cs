@@ -77,9 +77,7 @@ namespace Tautalos.Unity.Mobius.Broadcasters
 
 		public void Silence (bool shouldBeSilent)
 		{
-			if (shouldBeSilent != null) {
-				_shouldBeSilent = shouldBeSilent;
-			}
+			_shouldBeSilent = shouldBeSilent;
 		}
 		
 		public void Ignore (IEventTag eventTag)

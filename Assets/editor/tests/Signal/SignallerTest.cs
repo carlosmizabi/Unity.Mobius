@@ -5,7 +5,7 @@ using Tautalos.Unity.Mobius.Channels;
 namespace Tautalos.Unity.Mobius.Tests
 {
 	[TestFixture()]
-	public class SignallerTest
+	internal class SignallerTest
 	{
 		[Test,
 		 Category("Given a Signaller"),

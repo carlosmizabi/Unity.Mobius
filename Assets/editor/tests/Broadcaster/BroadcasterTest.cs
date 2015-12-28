@@ -6,7 +6,7 @@ using System;
 namespace Tautalos.Unity.Mobius.Tests
 {
 	[TestFixture()]
-	public class BroadcasterTest
+	internal class BroadcasterTest
 	{
 		[Test,
 		 Category("Given a Broadcaster"),

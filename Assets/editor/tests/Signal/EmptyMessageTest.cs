@@ -5,7 +5,7 @@ using Tautalos.Unity.Mobius.Channels;
 namespace Tautalos.Unity.Mobius.Tests
 {
 	[TestFixture()]
-	public class EmptyMessageTest
+	internal class EmptyMessageTest
 	{
 		[Test,
 		 Category	("Given the Empty Message"),

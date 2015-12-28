@@ -4,7 +4,7 @@ using Tautalos.Unity.Mobius.Broadcasters;
 namespace Tautalos.Unity.Mobius.Tests
 {
 	[TestFixture()]
-	public class EmptyWatcherTest
+	internal class EmptyWatcherTest
 	{
 		[Test,
 		 Category("Given the EmptyWatcher"),

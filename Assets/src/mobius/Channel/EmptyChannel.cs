@@ -30,7 +30,7 @@ namespace Tautalos.Unity.Mobius.Channels
 		}
 		
 		public  bool IsEmpty { 
-			get { return ChannelHelper.IsEmptyChannel (this); } 
+			get { return true; } 
 		}
 		
 		

@@ -32,12 +32,17 @@ namespace Tautalos.Unity.Mobius.Signals
 
 		public void Emit (ISignal signal)
 		{
-			throw new System.NotImplementedException ();
+			Channel.Emit (signal);
 		}
 
 		public void Emit (ISignal[] signals)
 		{
-			throw new System.NotImplementedException ();
+			if (signals != null && signals.Length > 0) {
+				for (int i = 0; i < signals.Length; i++) {
+					Channel.Emit (signals [i]);
+				}
+			}
+			
 		}
 
 		public object Owner {

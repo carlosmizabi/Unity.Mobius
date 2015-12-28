@@ -7,7 +7,7 @@ using System;
 
 namespace Tautalos.Unity.Mobius.Channels
 {
-	public class ChannelHelper
+	public class Helper
 	{
 	
 		public static bool IsEmptyChannel (IChannel channel)

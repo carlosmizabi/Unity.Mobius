@@ -12,7 +12,7 @@ namespace Tautalos.Unity.Mobius.Tests
 		public void ShouldAnswerNegative ()
 		{
 			var channel = new Channel ();
-			Assert.IsFalse (ChannelHelper.IsEmptyChannel (channel));
+			Assert.IsFalse (Helper.IsEmptyChannel (channel));
 		}
 		
 		[Test,
@@ -21,7 +21,7 @@ namespace Tautalos.Unity.Mobius.Tests
 		public void ShouldAnswerPositive ()
 		{
 			var channel = EmptyChannel.Instance;
-			Assert.IsTrue (ChannelHelper.IsEmptyChannel (channel));
+			Assert.IsTrue (Helper.IsEmptyChannel (channel));
 		}
 	}
 }

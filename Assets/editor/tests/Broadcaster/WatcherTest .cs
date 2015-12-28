@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Tautalos.Unity.Mobius.Tests
 {
 	[TestFixture()]
-	public class WatcherTest
+	internal class WatcherTest
 	{
 		Watcher watcher;
 		
@@ -38,7 +38,7 @@ namespace Tautalos.Unity.Mobius.Tests
 		public void ShouldCallTheProvidedOnSignalHandler ()
 		{
 			var result = false;
-			var watcher = new Watcher (onSignal: (signal) => {
+			var watcher = new Watcher (onSignal: (ISignal signal) => {
 				result = true;
 			});
 			watcher.OnNext (EmptySignal.Instance);
@@ -52,7 +52,7 @@ namespace Tautalos.Unity.Mobius.Tests
 		{
 			var exception = new Exception ();
 			Exception result = null;
-			var watcher = new Watcher (onError: (error) => {
+			var watcher = new Watcher (onError: (Exception error) => {
 				result = error;
 			});
 			watcher.OnError (exception);
@@ -79,7 +79,7 @@ namespace Tautalos.Unity.Mobius.Tests
 		public void ShouldNotCallHandlerOnSignalWithIgnoredEventTag ()
 		{
 			var result = "unchanged";
-			var watcher = new Watcher (onSignal: (signal) => {
+			var watcher = new Watcher (onSignal: (ISignal signal) => {
 				result = "called";
 			});
 			watcher.Ignore (EmptyEventTag.Instance);
@@ -93,7 +93,7 @@ namespace Tautalos.Unity.Mobius.Tests
 		public void ShouldCallOnSignalHandlerIfIgnoreIsLongerIgnored ()
 		{
 			var result = 0;
-			var watcher = new Watcher (onSignal: (signal) => {
+			var watcher = new Watcher (onSignal: (ISignal signal) => {
 				result++;
 			});
 			watcher.Ignore (EmptyEventTag.Instance);
@@ -130,7 +130,7 @@ namespace Tautalos.Unity.Mobius.Tests
 			var signal_2 = new Signal (signaller, eventTag_2, null);
 			 
 			var observedSignals = new List<ISignal> ();
-			var watcher = new Watcher (onSignal: (signal) => {
+			var watcher = new Watcher (onSignal: (ISignal signal) => {
 				observedSignals.Add (signal);
 			});
 			watcher.WatchAll (broadcaster);
@@ -159,7 +159,7 @@ namespace Tautalos.Unity.Mobius.Tests
 			var signal_3 = new Signal (signaller, eventTag_3, null);
 			
 			var observedSignals = new List<String> ();
-			var watcher = new Watcher (onSignal: (signal) => {
+			var watcher = new Watcher (onSignal: (ISignal signal) => {
 				observedSignals.Add (signal.EventTag.Name);
 			});
 			watcher.Watch (broadcaster, new IEventTag[]{ eventTag_1, eventTag_3 });
@@ -185,7 +185,7 @@ namespace Tautalos.Unity.Mobius.Tests
 			var eventTags = new EventTag[]{ eventTag_1, eventTag_2, eventTag_3};
 			var channel = new Channel ();
 			var broadcaster = new Broadcaster (channel, eventTags, "the-broadcaster");
-			var watcher = new Watcher (onSignal: (signal) => {});
+			var watcher = new Watcher (onSignal: (ISignal signal) => {});
 			watcher.Watch (broadcaster, new IEventTag[]{ eventTag_1, eventTag_3 });
 			
 			Assert.IsTrue (watcher.IsWatching (eventTag_1));
@@ -205,7 +205,7 @@ namespace Tautalos.Unity.Mobius.Tests
 			var allEventTags = new EventTag[]{ eventTag_1, eventTag_2, eventTag_3};
 			var channel = new Channel ();
 			var broadcaster = new Broadcaster (channel, allEventTags, "the-broadcaster");
-			var watcher = new Watcher (onSignal: (signal) => {});
+			var watcher = new Watcher (onSignal: (ISignal signal) => {});
 			watcher.Watch (broadcaster, new IEventTag[]{ eventTag_1, eventTag_3 });
 			
 			Assert.IsFalse (watcher.IsWatchingAll (broadcaster));
@@ -234,7 +234,7 @@ namespace Tautalos.Unity.Mobius.Tests
 			var signal_3 = new Signal (signaller_1, eventTag_3, null);
 			
 			var observedSignals = new List<String> ();
-			var watcher = new Watcher (onSignal: (signal) => {
+			var watcher = new Watcher (onSignal: (ISignal signal) => {
 				observedSignals.Add (signal.EventTag.Name);
 			});
 			watcher.WatchAll (broadcaster_1);
@@ -284,7 +284,7 @@ namespace Tautalos.Unity.Mobius.Tests
 			var signal_3 = new Signal (signaller, eventTag_3, null);
 			
 			var observedSignals = new List<String> ();
-			var watcher = new Watcher (onSignal: (signal) => {
+			var watcher = new Watcher (onSignal: (ISignal signal) => {
 				observedSignals.Add (signal.EventTag.Name);
 			});
 			watcher.WatchAll (broadcaster_1);
