@@ -30,12 +30,12 @@ namespace Tautalos.Unity.Mobius.Signals
 			return signal;
 		}
 
-		public void emit (ISignal signal)
+		public void Emit (ISignal signal)
 		{
 			throw new System.NotImplementedException ();
 		}
 
-		public void emit (ISignal[] signals)
+		public void Emit (ISignal[] signals)
 		{
 			throw new System.NotImplementedException ();
 		}

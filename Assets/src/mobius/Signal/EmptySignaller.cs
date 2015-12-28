@@ -19,12 +19,12 @@ namespace Tautalos.Unity.Mobius.Signals
 			return EmptySignal.Instance;
 		}
 
-		public void emit (ISignal signal)
+		public void Emit (ISignal signal)
 		{
 			
 		}
 
-		public void emit (ISignal[] signals)
+		public void Emit (ISignal[] signals)
 		{
 			
 		}

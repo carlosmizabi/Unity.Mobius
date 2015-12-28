@@ -11,9 +11,9 @@ namespace Tautalos.Unity.Mobius.Signals
 				
 		ISignal CreateSignal (IEventTag eventTag, IMessage message);
 		
-		void emit (ISignal signal);
+		void Emit (ISignal signal);
 		
-		void emit (ISignal[] signals);
+		void Emit (ISignal[] signals);
 		
 	}
 }
