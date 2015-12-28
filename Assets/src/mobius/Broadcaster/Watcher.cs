@@ -74,7 +74,13 @@ namespace Tautalos.Unity.Mobius.Broadcasters
 		public bool IsEmpty {
 			get { return false; }
 		}
-		
+
+		public void Silence (bool shouldBeSilent)
+		{
+			if (shouldBeSilent != null) {
+				_shouldBeSilent = shouldBeSilent;
+			}
+		}
 		
 		public void Ignore (IEventTag eventTag)
 		{
@@ -206,7 +212,10 @@ namespace Tautalos.Unity.Mobius.Broadcasters
 
 		public void OnNext (ISignal signal)
 		{
-			if (_OnSignal != null && signal != null && !_ignoredTags.Contains (signal.EventTag)) {
+			if (_OnSignal != null && 
+				signal != null && 
+				!_shouldBeSilent &&
+				!_ignoredTags.Contains (signal.EventTag)) {
 				_OnSignal (signal);
 			}
 		}
@@ -221,6 +230,7 @@ namespace Tautalos.Unity.Mobius.Broadcasters
 		static Action<Exception> _DefaultActionOnError = new Action<Exception> ((error) => {});
 		static Action _DefaultActionOnDone = new Action (() => {});
 		
+		bool _shouldBeSilent;
 		Action<ISignal> _OnSignal;
 		Action<Exception> _OnError;
 		Action _OnDone;

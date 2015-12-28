@@ -262,6 +262,55 @@ namespace Tautalos.Unity.Mobius.Tests
 			channel.Emit (signal_2);
 			Assert.AreEqual (1, observedSignals.Count);
 		}
+		
+		[Test,
+		 Category("Given a Watcher"),
+		 Description("When a watcher is  silenced, Then it should no longer observer any Broadcaster")]
+		public void ShouldBeSilentWhenAsked ()
+		{
+			var eventTag_1 = new EventTag ("event-one");
+			var eventTag_2 = new EventTag ("event-two");	
+			var eventTag_3 = new EventTag ("event-three");
+			
+			var channel = new Channel ("channel-one");
+			
+			var broadcaster_1 = new Broadcaster (channel, new IEventTag[]{ eventTag_1 }, "b-1");
+			var broadcaster_2 = new Broadcaster (channel, new IEventTag[]{ eventTag_2 }, "b-2");
+			var broadcaster_3 = new Broadcaster (channel, new IEventTag[]{ eventTag_3 }, "tb-3");
+			
+			var signaller = new Signaller (channel: channel, owner: this);
+			var signal_1 = new Signal (signaller, eventTag_1, null);
+			var signal_2 = new Signal (signaller, eventTag_2, null);
+			var signal_3 = new Signal (signaller, eventTag_3, null);
+			
+			var observedSignals = new List<String> ();
+			var watcher = new Watcher (onSignal: (signal) => {
+				observedSignals.Add (signal.EventTag.Name);
+			});
+			watcher.WatchAll (broadcaster_1);
+			watcher.WatchAll (broadcaster_2);
+			watcher.WatchAll (broadcaster_3);
+			
+			channel.Emit (signal_1);
+			channel.Emit (signal_2);
+			channel.Emit (signal_3);
+			
+			Assert.AreEqual (3, observedSignals.Count);
+			
+			watcher.Silence (true);
+			
+			observedSignals.Clear ();
+			
+			channel.Emit (signal_1);
+			channel.Emit (signal_2);
+			channel.Emit (signal_3);
+
+			watcher.Silence (false);
+			
+			channel.Emit (signal_1);
+			channel.Emit (signal_2);
+			Assert.AreEqual (2, observedSignals.Count);
+		}
 	}
 }
 
