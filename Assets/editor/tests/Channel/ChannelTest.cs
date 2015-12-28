@@ -385,10 +385,40 @@ namespace Tautalos.Unity.Mobius.Tests
 		 
 		public void ShouldRelaySignalToAppropriateBroadcaster ()
 		{
-			var tag = new EventTag ("test-event");
-			channel.AddEvent (tag);
-			var signal = new Signal (eventTag: tag, signaller: EmptySignaller.Instance, message: null);
-//			channel.Emit (signal);
+			List<object> bucket_1 = new List<object> ();
+			List<object> bucket_2 = new List<object> ();
+			
+			var tag_1 = new EventTag ("tag-one");
+			var signaller = new Signaller (channel: channel, owner: channel);
+			var bcaster_1 = new Broadcaster (
+				channel: channel, 
+				eventTags: new IEventTag[]{ tag_1 },
+				name: "b-caster"
+			);
+			var watcher_1 = new Watcher (onSignal: (ISignal signal) => {
+				bucket_1.Add (signal);
+			});
+			watcher_1.WatchAll (bcaster_1);
+			
+			var tag_2 = new EventTag ("tag-two");
+			var bcaster_2 = new Broadcaster (
+				channel: channel, 
+				eventTags: new IEventTag[]{ tag_2 },
+				name: "b-caster-2"
+			);
+			var watcher_2 = new Watcher (onSignal: (ISignal signal) => {
+				bucket_2.Add (signal);
+			});
+			watcher_2.WatchAll (bcaster_2);
+			
+			var aSignal = new Signal (eventTag: tag_1, signaller: signaller, message: null);
+			var aSignal_2 = new Signal (eventTag: tag_2, signaller: signaller, message: null);
+			signaller.Emit (aSignal);
+			signaller.Emit (aSignal_2);
+			Assert.AreEqual (1, bucket_1.Count);
+			Assert.Contains (aSignal, bucket_1);
+			Assert.AreEqual (1, bucket_2.Count);
+			Assert.Contains (aSignal_2, bucket_2);
 		}
 		
 	}
