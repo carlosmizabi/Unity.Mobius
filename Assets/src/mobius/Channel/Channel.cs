@@ -154,7 +154,12 @@ namespace Tautalos.Unity.Mobius.Channels
 		
 		public void Emit (ISignal signal)
 		{
-			throw new System.NotImplementedException ();
+			if (signal != null && 
+				signal.Signaller.Channel == this && 
+				Registry.ContainsKey (signal.EventTag)) {
+			    
+				_subject.OnNext (signal);
+			}
 		}
 		
 		public void Silence ()

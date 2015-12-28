@@ -2,6 +2,7 @@
 using Tautalos.Unity.Mobius.Channels;
 using UniRx;
 using Tautalos.Unity.Mobius.Signals;
+using System;
 
 namespace Tautalos.Unity.Mobius.Broadcasters
 {
@@ -17,9 +18,11 @@ namespace Tautalos.Unity.Mobius.Broadcasters
 		
 		bool HasEventTag (IEventTag eventTag);
 		
-		void Silence ();
+		IDisposable Subscribe (IObserver<ISignal> observer);
 		
+		IDisposable SubscribeWhere (IObserver<ISignal> observer, Func<ISignal, bool> perdicate);
+		
+		void Silence ();
 	}
-
 }
 

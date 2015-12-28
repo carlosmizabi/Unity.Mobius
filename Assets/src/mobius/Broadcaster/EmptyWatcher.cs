@@ -12,12 +12,21 @@ namespace Tautalos.Unity.Mobius.Broadcasters
 			get { return _instance; }
 		}
 		
-		public void Stop (IEventTag eventTag)
+		public void Ignore (IEventTag eventTag)
+		{
+		}
+		
+		public void DontIgnore (IEventTag eventTag)
 		{
 		}
 
-		public void StopAll ()
+		public void Stop ()
 		{
+		}
+		
+		public bool IsIgnoring (IEventTag tag)
+		{
+			return false;
 		}
 
 		public bool IsWatching (IEventTag eventTag)
@@ -30,10 +39,6 @@ namespace Tautalos.Unity.Mobius.Broadcasters
 		}
 
 		public void WatchAll (IBroadcaster broadcaster)
-		{
-		}
-
-		public void Watch (IEventTag eventTag)
 		{
 		}
 

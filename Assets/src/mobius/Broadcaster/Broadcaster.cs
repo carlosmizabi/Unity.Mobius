@@ -63,6 +63,24 @@ namespace Tautalos.Unity.Mobius.Broadcasters
 			return false;
 		}
 		
+		public IDisposable Subscribe (IObserver<ISignal> observer)
+		{
+			IDisposable subscription = null;
+			if (observer != null) {
+				subscription = _subject.Subscribe (observer);
+			}
+			return subscription;
+		}
+		
+		public IDisposable SubscribeWhere (IObserver<ISignal> observer, Func<ISignal, bool> perdicate)
+		{
+			IDisposable subscription = null;
+			if (observer != null && perdicate != null) {
+				subscription = _subject.Where (perdicate).Subscribe (observer);
+			}
+			return subscription;
+		}
+		
 		public void Silence ()
 		{
 			

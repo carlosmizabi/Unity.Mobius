@@ -1,5 +1,8 @@
 
 using Tautalos.Unity.Mobius.Channels;
+using System;
+using UniRx;
+using Tautalos.Unity.Mobius.Signals;
 
 namespace Tautalos.Unity.Mobius.Broadcasters
 {
@@ -42,14 +45,24 @@ namespace Tautalos.Unity.Mobius.Broadcasters
 		public void Silence ()
 		{			
 		}
+		
+		public IDisposable Subscribe (IObserver<ISignal> observer)
+		{
+			return null;
+		}
+
+		public IDisposable SubscribeWhere (IObserver<ISignal> observer, Func<ISignal, bool> perdicate)
+		{
+			return null;
+		}
 
 		public void OnCompleted ()
 		{
 		}
-		public void OnError (System.Exception error)
+		public void OnError (Exception error)
 		{
 		}
-		public void OnNext (Tautalos.Unity.Mobius.Signals.ISignal value)
+		public void OnNext (ISignal value)
 		{
 		}
 	}

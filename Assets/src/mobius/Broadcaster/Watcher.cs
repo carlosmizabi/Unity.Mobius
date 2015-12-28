@@ -2,6 +2,7 @@ using Tautalos.Unity.Mobius.Signals;
 using Tautalos.Unity.Mobius.Channels;
 using System;
 using UniRx;
+using System.Collections.Generic;
 
 namespace Tautalos.Unity.Mobius.Broadcasters
 {
@@ -10,6 +11,8 @@ namespace Tautalos.Unity.Mobius.Broadcasters
 		Action<ISignal> _OnSignal;
 		Action<Exception> _OnError;
 		Action _OnDone;
+		List<IEventTag> _ignoredTags = new List<IEventTag> ();
+		Dictionary<IBroadcaster, IDisposable> _subscriptions = new Dictionary<IBroadcaster, IDisposable> ();
 		
 		public Watcher (Action<ISignal> onSignal, Action<Exception> onError, Action onDone)
 		{
@@ -74,35 +77,61 @@ namespace Tautalos.Unity.Mobius.Broadcasters
 	
 		}
 		
-		public void Stop (IEventTag eventTag)
+		public void Ignore (IEventTag eventTag)
+		{
+			if (eventTag != null) {
+				_ignoredTags.Add (eventTag);
+			}
+		}
+		
+		public void DontIgnore (IEventTag eventTag)
+		{
+			if (eventTag != null) {
+				_ignoredTags.Remove (eventTag);
+			}
+		}
+
+		public void Stop ()
 		{
 			throw new System.NotImplementedException ();
 		}
-
-		public void StopAll ()
+		
+		public bool IsIgnoring (IEventTag eventTag)
 		{
-			throw new System.NotImplementedException ();
+			var isIgnored = false;
+			if (eventTag == null || _ignoredTags.Contains (eventTag)) {
+				isIgnored = true;
+			} 
+			return isIgnored;
 		}
 
 		public bool IsWatching (IEventTag eventTag)
 		{
 			throw new System.NotImplementedException ();
 		}
-		
-		public void Watch (IEventTag eventTag)
-		{
-			throw new System.NotImplementedException ();
-		}
-
 
 		public void Watch (IEventTag eventTag, IBroadcaster broadcaster)
 		{
-			throw new NotImplementedException ();
+			IDisposable subscription;
+			if (broadcaster != null && eventTag != null) {
+				subscription = broadcaster.SubscribeWhere (this, (ISignal signal) => {
+					return signal.EventTag == eventTag;
+				});
+				if (subscription != null) {
+					_subscriptions.Add (broadcaster, subscription);
+				}
+			}
 		}
 
 		public void WatchAll (IBroadcaster broadcaster)
 		{
-			throw new NotImplementedException ();
+			IDisposable subscription;
+			if (broadcaster != null) {
+				subscription = broadcaster.Subscribe (this);
+				if (subscription != null) {
+					_subscriptions.Add (broadcaster, subscription);
+				}
+			}
 		}
 
 		public bool IsEmpty {
@@ -125,7 +154,7 @@ namespace Tautalos.Unity.Mobius.Broadcasters
 
 		public void OnNext (ISignal signal)
 		{
-			if (_OnSignal != null && signal != null) {
+			if (_OnSignal != null && signal != null && !_ignoredTags.Contains (signal.EventTag)) {
 				_OnSignal (signal);
 			}
 		}
