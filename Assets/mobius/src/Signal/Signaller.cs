@@ -13,6 +13,10 @@ namespace Tautalos.Unity.Mobius.Signals
 			_owner = owner ?? this;
 		}
 		
+		public Signaller (IChannel channel): this(owner: null, channel: channel)
+		{
+		}
+		
 		public Signaller (): this(null, null)
 		{
 		}
