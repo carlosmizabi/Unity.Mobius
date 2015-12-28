@@ -15,6 +15,10 @@ namespace Tautalos.Unity.Mobius.Broadcasters
 		public void Ignore (IEventTag eventTag)
 		{
 		}
+
+		public void Silence (bool shouldBeSilent)
+		{
+		}
 		
 		public void DontIgnore (IEventTag eventTag)
 		{

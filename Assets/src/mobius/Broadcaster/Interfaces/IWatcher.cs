@@ -24,6 +24,8 @@ namespace Tautalos.Unity.Mobius.Broadcasters
 		
 		void WatchAll (IBroadcaster broadcaster);
 		
+		void Silence (bool shouldBeSilent);
+		
 		bool IsEmpty { get; }
 		
 	} 
