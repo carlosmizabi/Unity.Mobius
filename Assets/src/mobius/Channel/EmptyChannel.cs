@@ -39,9 +39,6 @@ namespace Tautalos.Unity.Mobius.Channels
 			return false;
 		}
 		
-		public void Silence ()
-		{
-		}
 		
 		public string Name {
 			get {

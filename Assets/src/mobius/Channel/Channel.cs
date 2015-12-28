@@ -162,11 +162,6 @@ namespace Tautalos.Unity.Mobius.Channels
 			}
 		}
 		
-		public void Silence ()
-		{
-			throw new NotImplementedException ();
-		}
-		
 		public ISignaller CreateSignaller (object owner)
 		{
 			ISignaller signaller = EmptySignaller.Instance;

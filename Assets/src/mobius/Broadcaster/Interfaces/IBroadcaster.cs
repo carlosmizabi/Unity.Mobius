@@ -21,8 +21,7 @@ namespace Tautalos.Unity.Mobius.Broadcasters
 		IDisposable Subscribe (IObserver<ISignal> observer);
 		
 		IDisposable SubscribeWhere (IObserver<ISignal> observer, Func<ISignal, bool> perdicate);
-		
-		void Silence ();
+
 	}
 }
 

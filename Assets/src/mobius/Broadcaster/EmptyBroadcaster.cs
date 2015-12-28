@@ -42,10 +42,6 @@ namespace Tautalos.Unity.Mobius.Broadcasters
 			return false;
 		}
 		
-		public void Silence ()
-		{			
-		}
-		
 		public IDisposable Subscribe (IObserver<ISignal> observer)
 		{
 			return null;

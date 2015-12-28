@@ -81,11 +81,6 @@ namespace Tautalos.Unity.Mobius.Broadcasters
 			return subscription;
 		}
 		
-		public void Silence ()
-		{
-			
-		}
-		
 		/********************************************************************
 		
 			Private
